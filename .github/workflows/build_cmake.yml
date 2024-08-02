@@ -12,53 +12,53 @@ jobs:
         config:
         - {
             name: "x86_64 posix seh msvcrt",
-            artifact: "x86_64-14.1.0-release-posix-seh-msvcrt-rt_v12-rev0.7z",
-            build_cmd: "--mode=gcc-14.1.0 --buildroot=/c/buildroot --jobs=4 --rev=0 --rt-version=v12 --threads=posix --exceptions=seh --arch=x86_64 --bin-compress --enable-languages=c,c++,fortran --logviewer-command=cat"
+            artifact: "x86_64-14.2.0-release-posix-seh-msvcrt-rt_v12-rev0.7z",
+            build_cmd: "--mode=gcc-14.2.0 --buildroot=/c/buildroot --jobs=4 --rev=0 --rt-version=v12 --threads=posix --exceptions=seh --arch=x86_64 --bin-compress --enable-languages=c,c++,fortran --logviewer-command=cat"
           }
         - {
             name: "x86_64 posix seh ucrt",
-            artifact: "x86_64-14.1.0-release-posix-seh-ucrt-rt_v12-rev0.7z",
-            build_cmd: "--mode=gcc-14.1.0 --buildroot=/c/buildroot --jobs=4 --rev=0 --rt-version=v12 --threads=posix --exceptions=seh --arch=x86_64 --bin-compress --enable-languages=c,c++,fortran --with-default-msvcrt=ucrt --logviewer-command=cat"
+            artifact: "x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0.7z",
+            build_cmd: "--mode=gcc-14.2.0 --buildroot=/c/buildroot --jobs=4 --rev=0 --rt-version=v12 --threads=posix --exceptions=seh --arch=x86_64 --bin-compress --enable-languages=c,c++,fortran --with-default-msvcrt=ucrt --logviewer-command=cat"
           }
         - {
             name: "x86_64 win32 seh msvcrt",
-            artifact: "x86_64-14.1.0-release-win32-seh-msvcrt-rt_v12-rev0.7z",
-            build_cmd: "--mode=gcc-14.1.0 --buildroot=/c/buildroot --jobs=4 --rev=0 --rt-version=v12 --threads=win32 --exceptions=seh --arch=x86_64 --bin-compress --enable-languages=c,c++,fortran --logviewer-command=cat"
+            artifact: "x86_64-14.2.0-release-win32-seh-msvcrt-rt_v12-rev0.7z",
+            build_cmd: "--mode=gcc-14.2.0 --buildroot=/c/buildroot --jobs=4 --rev=0 --rt-version=v12 --threads=win32 --exceptions=seh --arch=x86_64 --bin-compress --enable-languages=c,c++,fortran --logviewer-command=cat"
           }
         - {
             name: "x86_64 win32 seh ucrt",
-            artifact: "x86_64-14.1.0-release-win32-seh-ucrt-rt_v12-rev0.7z",
-            build_cmd: "--mode=gcc-14.1.0 --buildroot=/c/buildroot --jobs=4 --rev=0 --rt-version=v12 --threads=win32 --exceptions=seh --arch=x86_64 --bin-compress --enable-languages=c,c++,fortran --with-default-msvcrt=ucrt --logviewer-command=cat"
+            artifact: "x86_64-14.2.0-release-win32-seh-ucrt-rt_v12-rev0.7z",
+            build_cmd: "--mode=gcc-14.2.0 --buildroot=/c/buildroot --jobs=4 --rev=0 --rt-version=v12 --threads=win32 --exceptions=seh --arch=x86_64 --bin-compress --enable-languages=c,c++,fortran --with-default-msvcrt=ucrt --logviewer-command=cat"
           }
         - {
             name: "x86_64 mcf seh ucrt",
-            artifact: "x86_64-14.1.0-release-mcf-seh-ucrt-rt_v12-rev0.7z",
-            build_cmd: "--mode=gcc-14.1.0 --buildroot=/c/buildroot --jobs=4 --rev=0 --rt-version=v12 --threads=mcf --exceptions=seh --arch=x86_64 --bin-compress --enable-languages=c,c++,fortran --with-default-msvcrt=ucrt --logviewer-command=cat"
+            artifact: "x86_64-14.2.0-release-mcf-seh-ucrt-rt_v12-rev0.7z",
+            build_cmd: "--mode=gcc-14.2.0 --buildroot=/c/buildroot --jobs=4 --rev=0 --rt-version=v12 --threads=mcf --exceptions=seh --arch=x86_64 --bin-compress --enable-languages=c,c++,fortran --with-default-msvcrt=ucrt --logviewer-command=cat"
           }
         - {
             name: "i686 posix dwarf msvcrt",
-            artifact: "i686-14.1.0-release-posix-dwarf-msvcrt-rt_v12-rev0.7z",
-            build_cmd: "--mode=gcc-14.1.0 --buildroot=/c/buildroot --jobs=4 --rev=0 --rt-version=v12 --threads=posix --exceptions=dwarf --arch=i686 --bin-compress --enable-languages=c,c++,fortran --logviewer-command=cat"
+            artifact: "i686-14.2.0-release-posix-dwarf-msvcrt-rt_v12-rev0.7z",
+            build_cmd: "--mode=gcc-14.2.0 --buildroot=/c/buildroot --jobs=4 --rev=0 --rt-version=v12 --threads=posix --exceptions=dwarf --arch=i686 --bin-compress --enable-languages=c,c++,fortran --logviewer-command=cat"
           }
         - {
             name: "i686 posix dwarf ucrt",
-            artifact: "i686-14.1.0-release-posix-dwarf-ucrt-rt_v12-rev0.7z",
-            build_cmd: "--mode=gcc-14.1.0 --buildroot=/c/buildroot --jobs=4 --rev=0 --rt-version=v12 --threads=posix --exceptions=dwarf --arch=i686 --bin-compress --enable-languages=c,c++,fortran --with-default-msvcrt=ucrt --logviewer-command=cat"
+            artifact: "i686-14.2.0-release-posix-dwarf-ucrt-rt_v12-rev0.7z",
+            build_cmd: "--mode=gcc-14.2.0 --buildroot=/c/buildroot --jobs=4 --rev=0 --rt-version=v12 --threads=posix --exceptions=dwarf --arch=i686 --bin-compress --enable-languages=c,c++,fortran --with-default-msvcrt=ucrt --logviewer-command=cat"
           }
         - {
             name: "i686 win32 dwarf msvcrt",
-            artifact: "i686-14.1.0-release-win32-dwarf-msvcrt-rt_v12-rev0.7z",
-            build_cmd: "--mode=gcc-14.1.0 --buildroot=/c/buildroot --jobs=4 --rev=0 --rt-version=v12 --threads=win32 --exceptions=dwarf --arch=i686 --bin-compress --enable-languages=c,c++,fortran --logviewer-command=cat"
+            artifact: "i686-14.2.0-release-win32-dwarf-msvcrt-rt_v12-rev0.7z",
+            build_cmd: "--mode=gcc-14.2.0 --buildroot=/c/buildroot --jobs=4 --rev=0 --rt-version=v12 --threads=win32 --exceptions=dwarf --arch=i686 --bin-compress --enable-languages=c,c++,fortran --logviewer-command=cat"
           }
         - {
             name: "i686 win32 dwarf ucrt",
-            artifact: "i686-14.1.0-release-win32-dwarf-ucrt-rt_v12-rev0.7z",
-            build_cmd: "--mode=gcc-14.1.0 --buildroot=/c/buildroot --jobs=4 --rev=0 --rt-version=v12 --threads=win32 --exceptions=dwarf --arch=i686 --bin-compress --enable-languages=c,c++,fortran --with-default-msvcrt=ucrt --logviewer-command=cat"
+            artifact: "i686-14.2.0-release-win32-dwarf-ucrt-rt_v12-rev0.7z",
+            build_cmd: "--mode=gcc-14.2.0 --buildroot=/c/buildroot --jobs=4 --rev=0 --rt-version=v12 --threads=win32 --exceptions=dwarf --arch=i686 --bin-compress --enable-languages=c,c++,fortran --with-default-msvcrt=ucrt --logviewer-command=cat"
           }
         - {
             name: "i686 mcf dwarf ucrt",
-            artifact: "i686-14.1.0-release-mcf-dwarf-ucrt-rt_v12-rev0.7z",
-            build_cmd: "--mode=gcc-14.1.0 --buildroot=/c/buildroot --jobs=4 --rev=0 --rt-version=v12 --threads=mcf --exceptions=dwarf --arch=i686 --bin-compress --enable-languages=c,c++,fortran --with-default-msvcrt=ucrt --logviewer-command=cat"
+            artifact: "i686-14.2.0-release-mcf-dwarf-ucrt-rt_v12-rev0.7z",
+            build_cmd: "--mode=gcc-14.2.0 --buildroot=/c/buildroot --jobs=4 --rev=0 --rt-version=v12 --threads=mcf --exceptions=dwarf --arch=i686 --bin-compress --enable-languages=c,c++,fortran --with-default-msvcrt=ucrt --logviewer-command=cat"
           }
 
     steps:
@@ -137,43 +137,43 @@ jobs:
         config:
         - {
             name: "x86_64 posix seh msvcrt",
-            artifact: "x86_64-14.1.0-release-posix-seh-msvcrt-rt_v12-rev0.7z"
+            artifact: "x86_64-14.2.0-release-posix-seh-msvcrt-rt_v12-rev0.7z"
           }
         - {
             name: "x86_64 posix seh ucrt",
-            artifact: "x86_64-14.1.0-release-posix-seh-ucrt-rt_v12-rev0.7z"
+            artifact: "x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0.7z"
           }
         - {
             name: "x86_64 win32 seh msvcrt",
-            artifact: "x86_64-14.1.0-release-win32-seh-msvcrt-rt_v12-rev0.7z"
+            artifact: "x86_64-14.2.0-release-win32-seh-msvcrt-rt_v12-rev0.7z"
           }
         - {
             name: "x86_64 win32 seh ucrt",
-            artifact: "x86_64-14.1.0-release-win32-seh-ucrt-rt_v12-rev0.7z"
+            artifact: "x86_64-14.2.0-release-win32-seh-ucrt-rt_v12-rev0.7z"
           }
         - {
             name: "x86_64 mcf seh ucrt",
-            artifact: "x86_64-14.1.0-release-mcf-seh-ucrt-rt_v12-rev0.7z"
+            artifact: "x86_64-14.2.0-release-mcf-seh-ucrt-rt_v12-rev0.7z"
           }
         - {
             name: "i686 posix dwarf msvcrt",
-            artifact: "i686-14.1.0-release-posix-dwarf-msvcrt-rt_v12-rev0.7z"
+            artifact: "i686-14.2.0-release-posix-dwarf-msvcrt-rt_v12-rev0.7z"
           }
         - {
             name: "i686 posix dwarf ucrt",
-            artifact: "i686-14.1.0-release-posix-dwarf-ucrt-rt_v12-rev0.7z"
+            artifact: "i686-14.2.0-release-posix-dwarf-ucrt-rt_v12-rev0.7z"
           }
         - {
             name: "i686 win32 dwarf msvcrt",
-            artifact: "i686-14.1.0-release-win32-dwarf-msvcrt-rt_v12-rev0.7z"
+            artifact: "i686-14.2.0-release-win32-dwarf-msvcrt-rt_v12-rev0.7z"
           }
         - {
             name: "i686 win32 dwarf ucrt",
-            artifact: "i686-14.1.0-release-win32-dwarf-ucrt-rt_v12-rev0.7z"
+            artifact: "i686-14.2.0-release-win32-dwarf-ucrt-rt_v12-rev0.7z"
           }
         - {
             name: "i686 mcf dwarf ucrt",
-            artifact: "i686-14.1.0-release-mcf-dwarf-ucrt-rt_v12-rev0.7z"
+            artifact: "i686-14.2.0-release-mcf-dwarf-ucrt-rt_v12-rev0.7z"
           }
 
     needs: release
