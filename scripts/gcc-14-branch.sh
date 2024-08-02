@@ -61,6 +61,7 @@ PKG_PATCHES=(
 	gcc/gcc-13-mcf-sjlj-avoid-infinite-recursion.patch
 	gcc/gcc-14-add-truncate-option.patch
 	gcc/gcc-14-lto-wrapper-truncate.patch
+	gcc/gcc-14-fix-multiple-definition-of-type_info.patch
 )
 
 #
