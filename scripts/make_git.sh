@@ -67,8 +67,8 @@ PKG_CONFIGURE_FLAGS=(
 	--program-prefix=mingw32-
 	--enable-job-server
 	--without-guile
-	CFLAGS="\"$COMMON_CFLAGS\""
-	LDFLAGS="\"$COMMON_LDFLAGS -L$LIBS_DIR/lib\""
+	CFLAGS="$COMMON_CFLAGS"
+	LDFLAGS="$COMMON_LDFLAGS -L$LIBS_DIR/lib"
 )
 
 #

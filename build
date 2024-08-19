@@ -883,11 +883,14 @@ for rule in ${SUBTARGETS[@]}; do
 
 		func_dbg_hook $sub "configure"
 		[[ ${#PKG_CONFIGURE_FLAGS[@]} >0 ]] && {
-			configure_flags="${PKG_CONFIGURE_FLAGS[@]}"
+			declare -a configure_flags=()
+			for flag in "${PKG_CONFIGURE_FLAGS[@]}"; do
+				configure_flags+=("$flag")
+			done
 			func_configure \
 				$PKG_NAME \
 				$PKG_DIR_NAME \
-				"$configure_flags" \
+				"configure_flags" \
 				$CONFIGURE_LOG \
 				$CURR_BUILD_DIR \
 				$PKG_LNDIR \

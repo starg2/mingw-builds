@@ -133,10 +133,10 @@ PKG_CONFIGURE_FLAGS=(
 	--with-pkgversion="\"$BUILD_ARCHITECTURE-$THREADS_MODEL-$EXCEPTIONS_MODEL${REV_STRING}, $MINGW_W64_PKG_STRING\""
 	--with-bugurl=$BUG_URL
 	#
-	CFLAGS="\"$COMMON_CFLAGS\""
-	CXXFLAGS="\"$COMMON_CXXFLAGS\""
-	CPPFLAGS="\"$COMMON_CPPFLAGS\""
-	LDFLAGS="\"$COMMON_LDFLAGS $( [[ $BUILD_ARCHITECTURE == i686 ]] && echo -Wl,--large-address-aware )\""
+	CFLAGS="$COMMON_CFLAGS"
+	CXXFLAGS="$COMMON_CXXFLAGS"
+	CPPFLAGS="$COMMON_CPPFLAGS"
+	LDFLAGS="$COMMON_LDFLAGS $( [[ $BUILD_ARCHITECTURE == i686 ]] && echo -Wl,--large-address-aware )"
 	LD_FOR_TARGET=$PREFIX/bin/ld.exe
 	--with-boot-ldflags="\"$LDFLAGS -Wl,--disable-dynamicbase -static-libstdc++ -static-libgcc\""
 )
