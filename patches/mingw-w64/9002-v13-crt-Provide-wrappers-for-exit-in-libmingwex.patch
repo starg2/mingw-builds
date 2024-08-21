@@ -1,5 +1,5 @@
 diff --git a/mingw-w64-crt/Makefile.am b/mingw-w64-crt/Makefile.am
-index 81c129bf4..934c1607a 100644
+index d497fa76b..a0bd0c7ee 100644
 --- a/mingw-w64-crt/Makefile.am
 +++ b/mingw-w64-crt/Makefile.am
 @@ -117,7 +117,7 @@ src_libmingw32=include/oscalls.h include/internal.h include/sect_attribs.h \
@@ -75,23 +75,6 @@ index 000000000..112d8e3c7
 +{
 +  (*__MINGW_IMP_SYMBOL(_Exit))(status);
 +}
-diff --git a/mingw-w64-crt/crt/ucrtbase_compat.c b/mingw-w64-crt/crt/ucrtbase_compat.c
-index 31a3ee3f1..9eb33e534 100644
---- a/mingw-w64-crt/crt/ucrtbase_compat.c
-+++ b/mingw-w64-crt/crt/ucrtbase_compat.c
-@@ -102,9 +102,11 @@ int __cdecl at_quick_exit(void (__cdecl *func)(void))
- 
- int __cdecl (*__MINGW_IMP_SYMBOL(at_quick_exit))(void (__cdecl *)(void)) = at_quick_exit;
- 
-+extern void (*__MINGW_IMP_SYMBOL(_exit))(int) __attribute__((__noreturn__));
-+
- void __cdecl __MINGW_ATTRIB_NORETURN _amsg_exit(int ret) {
-   fprintf(stderr, "runtime error %d\n", ret);
--  _exit(255);
-+  (*__MINGW_IMP_SYMBOL(_exit))(255);
- }
- 
- unsigned int __cdecl _get_output_format(void)
 diff --git a/mingw-w64-crt/lib-common/api-ms-win-crt-runtime-l1-1-0.def.in b/mingw-w64-crt/lib-common/api-ms-win-crt-runtime-l1-1-0.def.in
 index ea310d426..33e4f5504 100644
 --- a/mingw-w64-crt/lib-common/api-ms-win-crt-runtime-l1-1-0.def.in
@@ -176,11 +159,11 @@ index 64e978088..aba98b197 100644
  exp F_X86_ANY(DATA)
  fabs DATA
  fclose
-diff --git a/mingw-w64-crt/lib-common/ucrtbase.def.in b/mingw-w64-crt/lib-common/ucrtbase.def.in
-index 0c96c8345..8dc660864 100644
---- a/mingw-w64-crt/lib-common/ucrtbase.def.in
-+++ b/mingw-w64-crt/lib-common/ucrtbase.def.in
-@@ -28,7 +28,7 @@ _CreateFrameInfo
+diff --git a/mingw-w64-crt/lib-common/ucrtbase-common.def.in b/mingw-w64-crt/lib-common/ucrtbase-common.def.in
+index 4e1c87da6..bdfdb1579 100644
+--- a/mingw-w64-crt/lib-common/ucrtbase-common.def.in
++++ b/mingw-w64-crt/lib-common/ucrtbase-common.def.in
+@@ -60,7 +60,7 @@ F_DEBUG(_CrtSetReportMode)
  F_I386(_CxxThrowException@8)
  F_NON_I386(_CxxThrowException)
  F_I386(_EH_prolog)
@@ -189,16 +172,16 @@ index 0c96c8345..8dc660864 100644
  _FCbuild
  _FCmulcc
  _FCmulcr
-@@ -297,7 +297,7 @@ _execv
+@@ -345,7 +345,7 @@ _execv
  _execve
  _execvp
  _execvpe
 -_exit
 +_exit DATA
  _expand
+ F_DEBUG(_expand_dbg)
  _fclose_nolock
- _fcloseall
-@@ -2290,7 +2290,7 @@ erfcf
+@@ -2328,7 +2328,7 @@ erfcf
  F_ARM_ANY(erfcl) ; Can't use long double functions from the CRT on x86
  erff
  F_ARM_ANY(erfl) ; Can't use long double functions from the CRT on x86
@@ -207,7 +190,7 @@ index 0c96c8345..8dc660864 100644
  exp
  exp2
  exp2f
-@@ -2480,7 +2480,7 @@ putwc
+@@ -2518,7 +2518,7 @@ putwc
  putwchar
  qsort
  qsort_s
@@ -986,3 +969,20 @@ index 9d4cec588..a720c23dc 100644
  exp
  exp2
  exp2f
+diff --git a/mingw-w64-crt/misc/ucrt_compat.c b/mingw-w64-crt/misc/ucrt_compat.c
+index 7fefae11e..446b5b06d 100644
+--- a/mingw-w64-crt/misc/ucrt_compat.c
++++ b/mingw-w64-crt/misc/ucrt_compat.c
+@@ -34,10 +34,11 @@ unsigned int __cdecl _get_output_format(void);
+ 
+ int __cdecl __ms_fwprintf(FILE *, const wchar_t *, ...);
+ 
++extern void (*__MINGW_IMP_SYMBOL(_exit))(int) __attribute__((__noreturn__));
+ 
+ void __cdecl __MINGW_ATTRIB_NORETURN _amsg_exit(int ret) {
+   fprintf(stderr, "runtime error %d\n", ret);
+-  _exit(255);
++  (*__MINGW_IMP_SYMBOL(_exit))(255);
+ }
+ 
+ unsigned int __cdecl _get_output_format(void)
