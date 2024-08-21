@@ -1,23 +1,22 @@
-diff --unified --recursive --text binutils-2.41.orig/bfd/bfdio.c binutils-2.41/bfd/bfdio.c
---- binutils-2.41.orig/bfd/bfdio.c
-+++ binutils-2.41/bfd/bfdio.c
-@@ -126,7 +126,7 @@
- /* This prototype was added to locale.h in version 9.0 of MinGW-w64.  */
-    _CRTIMP unsigned int __cdecl ___lc_codepage_func (void);
+--- binutils-2.43.1.orig/bfd/bfdio.c
++++ binutils-2.43.1/bfd/bfdio.c
+@@ -193,7 +193,7 @@
+   /* This prototype was added to locale.h in version 9.0 of MinGW-w64.  */
+   _CRTIMP unsigned int __cdecl ___lc_codepage_func (void);
  #endif
--   const unsigned int cp = ___lc_codepage_func ();
-+   const unsigned int cp = CP_ACP;
+-  const unsigned int cp = ___lc_codepage_func ();
++  const unsigned int cp = CP_ACP;
  #else
-    const unsigned int cp = CP_UTF8;
+   const unsigned int cp = CP_UTF8;
  #endif
-@@ -142,8 +142,8 @@
-
-    /* Convert any UNIX style path separators into the DOS i.e. backslash separator.  */
-    for (ix = 0; ix < partPathLen; ix++)
--     if (IS_UNIX_DIR_SEPARATOR(filename[ix]))
--       partPath[ix] = '\\';
-+     if (IS_UNIX_DIR_SEPARATOR(partPath[ix]))
-+       partPath[ix] = L'\\';
-
-    /* Getting the full path from the provided partial path.
-       1) Get the length.
+@@ -209,8 +209,8 @@
+ 
+   /* Convert any UNIX style path separators into the DOS i.e. backslash separator.  */
+   for (ix = 0; ix < partPathLen; ix++)
+-    if (IS_UNIX_DIR_SEPARATOR(filename[ix]))
+-      partPath[ix] = '\\';
++    if (IS_UNIX_DIR_SEPARATOR(partPath[ix]))
++      partPath[ix] = L'\\';
+ 
+   /* Getting the full path from the provided partial path.
+      1) Get the length.
