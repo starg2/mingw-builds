@@ -875,7 +875,7 @@ index d6a487db1..f6626c5df 100644
 @@ -1890,7 +1890,7 @@ _onexit
  _purecall
  _time64
- atexit DATA
+ _crt_atexit == atexit ; rename atexit to _crt_atexit for compatibility with UCRT, real atexit function provided by mingw-w64
 -exit
 +exit DATA
  hgets

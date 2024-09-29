@@ -56,9 +56,7 @@ PKG_PATCHES=(
 		}
 	)
 	$( [[ $RUNTIME_MAJOR_VERSION -ge 11 ]] && {
-		[[ $RUNTIME_MAJOR_VERSION -ge 13 ]] && {
-			echo "mingw-w64/9001-v13-crt-Mark-atexit-as-DATA-because-it-s-always-overridd.patch"
-		} || {
+		[[ $RUNTIME_MAJOR_VERSION -le 12 ]] && {
 			echo "mingw-w64/9001-v11-crt-Mark-atexit-as-DATA-because-it-s-always-overridd.patch"
 		}
 		[[ $RUNTIME_MAJOR_VERSION -ge 13 ]] && {
