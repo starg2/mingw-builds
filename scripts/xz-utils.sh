@@ -35,11 +35,11 @@
 
 # **************************************************************************
 
-PKG_VERSION=5.6.2
+PKG_VERSION=5.6.3
 PKG_NAME=xz-${PKG_VERSION}
 PKG_DIR_NAME=xz-${PKG_VERSION}
 PKG_TYPE=.tar.xz
-PKG_SHA256=a9db3bb3d64e248a0fae963f8fb6ba851a26ba1822e504dc0efd18a80c626caf
+PKG_SHA256=db0590629b6f0fa36e74aea5f9731dc6f8df068ce7b7bafa45301832a5eebc3a
 PKG_URLS=(
 	"https://github.com/tukaani-project/xz/releases/download/v${PKG_VERSION}/xz-${PKG_VERSION}${PKG_TYPE}|sha256:${PKG_SHA256}"
 )
