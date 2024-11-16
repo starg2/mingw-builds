@@ -50,9 +50,9 @@ PKG_PRIORITY=runtime
 
 PKG_PATCHES=(
 	$( [[ $RUNTIME_VERSION == v10.0.0 ]] && \
-	    [[ $MSVCRT_VERSION == ucrt ]] && {
-	        echo "mingw-w64/89bacd2be60fa92dd74d3b5f2074b06a32d8c784.patch"
-		    echo "mingw-w64/bceadc54d8f32b3f14c69074892e2718eac08e3b.patch"
+		[[ $MSVCRT_VERSION == ucrt ]] && {
+			echo "mingw-w64/89bacd2be60fa92dd74d3b5f2074b06a32d8c784.patch"
+			echo "mingw-w64/bceadc54d8f32b3f14c69074892e2718eac08e3b.patch"
 		}
 	)
 	$( [[ $RUNTIME_MAJOR_VERSION -ge 11 ]] && {
