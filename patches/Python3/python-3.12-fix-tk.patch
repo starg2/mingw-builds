@@ -1,0 +1,13 @@
+diff --git a/Modules/Setup.stdlib.in b/Modules/Setup.stdlib.in
+index 945edffcfe..3d2f620663 100644
+--- a/Modules/Setup.stdlib.in
++++ b/Modules/Setup.stdlib.in
+@@ -152,7 +152,7 @@
+ # Linux: -luuid, BSD/AIX: libc's uuid_create()
+ @MODULE__UUID_TRUE@_uuid _uuidmodule.c
+ 
+-@MODULE__TKINTER_TRUE@_tkinter _tkinter.c tkappinit.c
++@MODULE__TKINTER_TRUE@_tkinter _tkinter.c tkappinit.c -DWITH_APPINIT -ltcl -ltk
+ 
+ ############################################################################
+ # macOS specific modules
