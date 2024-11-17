@@ -69,6 +69,7 @@ readonly RUN_ARGS="$@"
 	echo "    --rev=N                    - specifies number of the build revision"
 	echo "    --threads=<model>          - specifies the threads model for GCC/libstdc++, available: win32, posix, mcf"
 	echo "    --static-gcc               - build static GCC"
+	echo "    --enable-wildcard          - enable wildcard expansion by mingw-w64 runtime"
 	echo "    --with-default-msvcrt=     - specifies msvc version the toolchain will target"
 	echo "                                 <msvcrt|msvcr80|msvcr90|msvcr100|msvcr110|msvcr120|ucrt>"
 	echo "    --with-default-win32-winnt=<ver>     - specifies default windows version the toolchain will target"
@@ -389,6 +390,7 @@ while [[ $# > 0 ]]; do
 				;;
 			esac
 		;;
+		--enable-wildcard) CRT_GLOB=yes ;;
 		--with-default-msvcrt=*)
 			MSVCRT_VERSION=${1/--with-default-msvcrt=/}
 			case $MSVCRT_VERSION in

@@ -113,7 +113,9 @@ PKG_CONFIGURE_FLAGS=(
 	--with-sysroot=$CRTPREFIX
 	#
 	$LIBCONF
-	--enable-wildcard
+	$( [[ $CRT_GLOB == yes ]] \
+		&& echo "--enable-wildcard" \
+	)
 	--with-default-msvcrt=$MSVCRT_VERSION
 	#
 	CFLAGS="$COMMON_CFLAGS"
