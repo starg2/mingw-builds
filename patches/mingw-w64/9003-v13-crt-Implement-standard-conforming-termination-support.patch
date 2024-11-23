@@ -63,10 +63,10 @@ index d08d2a81f..fbd87a9c5 100644
  
  char __mingw_module_is_dll = 1;
 diff --git a/mingw-w64-crt/crt/crtexe.c b/mingw-w64-crt/crt/crtexe.c
-index aa0372a52..a3774a9db 100644
+index cdf5dcd25..246791de0 100644
 --- a/mingw-w64-crt/crt/crtexe.c
 +++ b/mingw-w64-crt/crt/crtexe.c
-@@ -22,6 +22,9 @@
+@@ -21,6 +21,9 @@
  #include <sect_attribs.h>
  #include <locale.h>
  #include <corecrt_startup.h>
@@ -76,7 +76,7 @@ index aa0372a52..a3774a9db 100644
  
  #if defined(__SEH__) && (!defined(__clang__) || __clang_major__ >= 7)
  #define SEH_INLINE_ASM
-@@ -38,6 +41,7 @@ extern int _fmode;
+@@ -37,6 +40,7 @@ extern int _fmode;
  #undef _commode
  extern int _commode;
  extern int _dowildcard;
@@ -84,19 +84,19 @@ index aa0372a52..a3774a9db 100644
  
  extern _CRTIMP void __cdecl _initterm(_PVFV *, _PVFV *);
  
-@@ -307,6 +311,11 @@ __tmainCRTStartup (void)
- #ifdef _UNICODE
-     // Narrow argv is already a local copy so only duplicate the wide version.
+@@ -250,6 +254,11 @@ __tmainCRTStartup (void)
+     _fpreset ();
+ 
      duplicate_ppstrings (argc, &argv);
-+#endif
 +#ifdef __USING_MCFGTHREAD__
 +    /* Register `fflush(NULL)` before user-defined constructors, so
 +     * it will be executed after all user-defined destructors.  */
 +    __MCF_cxa_atexit ((__MCF_cxa_dtor_cdecl*)(intptr_t) fflush, NULL, &__dso_handle);
- #endif
++#endif
      __main (); /* C++ initialization. */
  #ifdef _UNICODE
-@@ -386,12 +395,16 @@ static void duplicate_ppstrings (int ac, _TCHAR ***av)
+     __winitenv = envp;
+@@ -326,12 +335,16 @@ static void duplicate_ppstrings (int ac, _TCHAR ***av)
  
  int __cdecl atexit (_PVFV func)
  {
