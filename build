@@ -570,6 +570,12 @@ if [[ -n $PROVIDED_TOOLCHAIN ]] ; then
 	i686_HOST_MINGW_PATH=$TOOLCHAINS_DIR/mingw32
 	x86_64_HOST_MINGW_PATH=$TOOLCHAINS_DIR/mingw64
 else
+	# The host toolchains for sjlj exception model are no longer officially provided.
+	# Rather than trying to download non-existent files, tell the user to install one manually.
+	[[ $EXCEPTIONS_MODEL == sjlj ]] && {
+		die "host toolchains for sjlj exception model must be installed manually (--provided-toolchain=...). terminate."
+	}
+
 	echo "Using downloaded toolchain"
 fi
 
