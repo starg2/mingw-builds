@@ -35,12 +35,12 @@
 
 # **************************************************************************
 
-PKG_VERSION=1.6
+PKG_VERSION=2.0.ga
 PKG_NAME=$PKG_ARCHITECTURE-mcfgthread-${PKG_VERSION}
 PKG_DIR_NAME=mcfgthread-${PKG_VERSION}
 PKG_TYPE=git
 PKG_URLS=(
-	"https://github.com/lhmouse/mcfgthread.git|branch:releases/v$PKG_VERSION|repo:$PKG_TYPE|module:$PKG_DIR_NAME"
+	"https://github.com/lhmouse/mcfgthread.git|branch:releases/v$(echo $PKG_VERSION | cut -d . -f -2)|repo:$PKG_TYPE|module:$PKG_DIR_NAME"
 )
 
 PKG_PRIORITY=prereq
@@ -48,7 +48,7 @@ PKG_PRIORITY=prereq
 #
 
 PKG_EXECUTE_AFTER_UNCOMPRESS=(
-	"git reset --hard c4f164cac9d6022ae327b31147106d8ff9c27ac2" # Reset to this commit hash for reproducible builds
+	"git reset --hard b8dcc99680f64b1a4743e47e4c2f892407d69544" # Reset to this commit hash for reproducible builds
 )
 
 #
@@ -57,44 +57,38 @@ PKG_PATCHES=()
 
 #
 
-PKG_EXECUTE_AFTER_PATCH=(
-	"autoreconf -i"
-)
+ABI_MAJOR=$(echo $PKG_VERSION | cut -d . -f 1)
 
-#
-
-PKG_CONFIGURE_FLAGS=(
-	--host=$HOST
-	--build=$BUILD
-	--target=$TARGET
-	#
-	--prefix=$PREREQ_DIR/$PKG_ARCHITECTURE-mcfgthread
-	#
-	CFLAGS="$COMMON_CFLAGS"
-	CXXFLAGS="$COMMON_CXXFLAGS"
-	CPPFLAGS="$COMMON_CPPFLAGS"
-	LDFLAGS="$COMMON_LDFLAGS"
+PKG_EXECUTE_AFTER_CONFIGURE=(
+	"sed 's/@abi_major@/$ABI_MAJOR/g; s/@abi_minor@/$(echo $PKG_VERSION | cut -d . -f 2)/g; s/@abi_string@/$PKG_VERSION/g' $SRCS_DIR/$PKG_DIR_NAME/mcfgthread/version.h.in > version.h"
 )
 
 #
 
 PKG_MAKE_FLAGS=(
+	-f "$PATCHES_DIR/mcfgthread/Makefile"
 	-j$JOBS
 	all
-)
-
-#
-
-PKG_TESTSUITE_FLAGS=(
-	-j$JOBS
-	check
+	CC=gcc
+	AR=ar
+	RC=windres
+	CFLAGS="\"$COMMON_CFLAGS\""
+	CXXFLAGS="\"$COMMON_CXXFLAGS\""
+	CPPFLAGS="\"$COMMON_CPPFLAGS\""
+	LDFLAGS="\"$COMMON_LDFLAGS\""
+	ABI_MAJOR=$ABI_MAJOR
+	SOURCE_DIR="$SRCS_DIR/$PKG_DIR_NAME/mcfgthread"
 )
 
 #
 
 PKG_INSTALL_FLAGS=(
+	-f "$PATCHES_DIR/mcfgthread/Makefile"
 	-j$JOBS
 	$( [[ $STRIP_ON_INSTALL == yes ]] && echo install-strip || echo install )
+	DESTDIR="$PREREQ_DIR/$PKG_ARCHITECTURE-mcfgthread"
+	ABI_MAJOR=$ABI_MAJOR
+	SOURCE_DIR="$SRCS_DIR/$PKG_DIR_NAME/mcfgthread"
 )
 
 # **************************************************************************

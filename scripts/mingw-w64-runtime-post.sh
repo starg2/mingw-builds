@@ -96,8 +96,8 @@ function runtime_post_install {
 	[[ $THREADS_MODEL == mcf ]] && {
 		# mcfgthread
 		mkdir -pv $PREFIX/$TARGET/include/mcfgthread
-		cp -fv $PREREQ_DIR/$BUILD_ARCHITECTURE-mcfgthread/bin/libmcfgthread-1.dll $PREFIX/bin/ || { echo "101"; return 1; }
-		cp -fv $PREREQ_DIR/$BUILD_ARCHITECTURE-mcfgthread/bin/libmcfgthread-1.dll $PREFIX/$TARGET/lib/ || { echo "102"; return 1; }
+		cp -fv $PREREQ_DIR/$BUILD_ARCHITECTURE-mcfgthread/bin/libmcfgthread*.dll $PREFIX/bin/ || { echo "101"; return 1; }
+		cp -fv $PREREQ_DIR/$BUILD_ARCHITECTURE-mcfgthread/bin/libmcfgthread*.dll $PREFIX/$TARGET/lib/ || { echo "102"; return 1; }
 		cp -fv $PREREQ_DIR/$BUILD_ARCHITECTURE-mcfgthread/lib/libmcfgthread.dll.a $PREFIX/$TARGET/lib/ || { echo "103"; return 1; }
 		cp -fv $PREREQ_DIR/$BUILD_ARCHITECTURE-mcfgthread/lib/libmcfgthread.a $PREFIX/$TARGET/lib/ || { echo "104"; return 1; }
 		cp -fv $PREREQ_DIR/$BUILD_ARCHITECTURE-mcfgthread/include/mcfgthread/*.h $PREFIX/$TARGET/include/mcfgthread/ || { echo "105"; return 1; }
@@ -137,7 +137,7 @@ function runtime_post_install {
 
 		[[ $THREADS_MODEL == mcf ]] && {
 			# mcfgthread
-			cp -fv $PREREQ_DIR/$_reverse_arch-mcfgthread/bin/libmcfgthread-1.dll $PREFIX/$TARGET/lib$_reverse_bits/ || { echo "107"; return 1; }
+			cp -fv $PREREQ_DIR/$_reverse_arch-mcfgthread/bin/libmcfgthread*.dll $PREFIX/$TARGET/lib$_reverse_bits/ || { echo "107"; return 1; }
 			cp -fv $PREREQ_DIR/$_reverse_arch-mcfgthread/lib/libmcfgthread.dll.a $PREFIX/$TARGET/lib$_reverse_bits/ || { echo "108"; return 1; }
 			cp -fv $PREREQ_DIR/$_reverse_arch-mcfgthread/lib/libmcfgthread.a $PREFIX/$TARGET/lib$_reverse_bits/ || { echo "109"; return 1; }
 		}
