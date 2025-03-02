@@ -56,6 +56,7 @@ PKG_PATCHES=(
 	make/make-getopt.patch
 	make/make-4.3_undef-HAVE_STRUCT_DIRENT_D_TYPE.patch
 	make/make-4.4-timestamps.patch
+	make/make-4.4-fix-prototype.patch
 )
 
 #
