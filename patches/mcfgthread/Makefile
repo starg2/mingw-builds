@@ -74,7 +74,7 @@ all: libmcfgthread.a libmcfgthread-$(ABI_MAJOR).dll
 libmcfgthread.a: $(mcfgthread_obj_min:%=static/%) $(mcfgthread_obj_ex:%=static/%)
 	$(AR) rcs $@ $?
 
-libmcfgthread-$(ABI_MAJOR).dll: $(mcfgthread_obj_min:%=shared/%) $(mcfgthread_obj_ex:%=shared/%) $(SOURCE_DIR)/mcfgthread.def
+libmcfgthread-$(ABI_MAJOR).dll: $(mcfgthread_obj_min:%=shared/%) $(mcfgthread_obj_ex:%=shared/%) $(SOURCE_DIR)/mcfgthread.def version.o
 	$(CC) -shared $(LDFLAGS) $(mcfgthread_ldflags) -Wl,--out-implib,libmcfgthread.dll.a -o $@ $+ -lkernel32 -lntdll
 
 static/%.o: $(SOURCE_DIR)/%.c
