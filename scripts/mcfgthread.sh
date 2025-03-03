@@ -60,7 +60,7 @@ PKG_PATCHES=()
 ABI_MAJOR=$(echo $PKG_VERSION | cut -d . -f 1)
 
 PKG_EXECUTE_AFTER_CONFIGURE=(
-	"sed 's/@abi_major@/$ABI_MAJOR/g; s/@abi_minor@/$(echo $PKG_VERSION | cut -d . -f 2)/g; s/@abi_string@/$PKG_VERSION/g' $SRCS_DIR/$PKG_DIR_NAME/mcfgthread/version.h.in > version.h"
+	"sed 's/@abi_major@/$ABI_MAJOR/g; s/@abi_minor@/$(echo $PKG_VERSION | cut -d . -f 2)/g; s/@abi_string@/\"$PKG_VERSION\"/g' $SRCS_DIR/$PKG_DIR_NAME/mcfgthread/version.h.in > version.h"
 )
 
 #
