@@ -51,6 +51,7 @@ PKG_PRIORITY=extra
 
 PKG_PATCHES=(
 	libgnurx/mingw32-libgnurx-honor-destdir.patch
+	libgnurx/libgnurx-c23-bool.patch
 )
 
 #
