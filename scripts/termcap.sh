@@ -49,6 +49,7 @@ PKG_PRIORITY=extra
 #
 
 PKG_PATCHES=(
+	termcap/01-makefile-no-cflags-set.patch
 	termcap/include-io-header.patch
 )
 
