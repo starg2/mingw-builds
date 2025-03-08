@@ -1,0 +1,11 @@
+--- a/include/curses.h.in
++++ b/include/curses.h.in
+@@ -285,7 +285,7 @@
+ 
+ typedef @cf_cv_type_of_bool@ NCURSES_BOOL;
+ 
+-#if @USE_CXX_BOOL@	/* __cplusplus, etc. */
++#if defined(__cplusplus) || (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 202311L)	/* __cplusplus, etc. */
+ 
+ /* use the C++ compiler's bool type */
+ #define NCURSES_BOOL bool

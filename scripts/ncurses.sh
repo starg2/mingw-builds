@@ -35,11 +35,11 @@
 
 # **************************************************************************
 
-PKG_VERSION=6.4
+PKG_VERSION=6.5
 PKG_NAME=ncurses-${PKG_VERSION}
 PKG_DIR_NAME=ncurses-${PKG_VERSION}
 PKG_TYPE=.tar.gz
-PKG_SHA256=6931283d9ac87c5073f30b6290c4c75f21632bb4fc3603ac8100812bed248159
+PKG_SHA256=136D91BC269A9A5785E5F9E980BC76AB57428F604CE3E5A5A90CEBC767971CC6
 PKG_URLS=(
 	"https://ftpmirror.gnu.org/gnu/ncurses/ncurses-${PKG_VERSION}${PKG_TYPE}|sha256:${PKG_SHA256}"
 )
@@ -52,6 +52,7 @@ PKG_PATCHES=(
 	ncurses/work_around_changed_output_of_GNU_cpp_5.x.patch
 	ncurses/ncurses-6.3-pkgconfig.patch
 	ncurses/ncurses-6.3-cflags-private.patch
+	ncurses/ncurses-bool.patch
 )
 
 #
