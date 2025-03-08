@@ -35,11 +35,11 @@
 
 # **************************************************************************
 
-PKG_VERSION=1.5.6
+PKG_VERSION=1.5.7
 PKG_NAME=$BUILD_ARCHITECTURE-zstd-${PKG_VERSION}-$LINK_TYPE_SUFFIX
 PKG_DIR_NAME=zstd-${PKG_VERSION}
 PKG_TYPE=.tar.gz
-PKG_SHA256=8c29e06cf42aacc1eafc4077ae2ec6c6fcb96a626157e0593d5e82a34fd403c1
+PKG_SHA256=eb33e51f49a15e023950cd7825ca74a4a2b43db8354825ac24fc1b7ee09e6fa3
 PKG_URLS=(
 	"https://github.com/facebook/zstd/releases/download/v${PKG_VERSION}/zstd-${PKG_VERSION}${PKG_TYPE}|sha256:${PKG_SHA256}"
 )
