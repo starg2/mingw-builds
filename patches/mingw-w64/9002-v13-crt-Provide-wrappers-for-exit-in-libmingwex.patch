@@ -1,5 +1,5 @@
 diff --git a/mingw-w64-crt/Makefile.am b/mingw-w64-crt/Makefile.am
-index 1e5a0d14b..2950fe875 100644
+index 779beab17..b8b7c5aeb 100644
 --- a/mingw-w64-crt/Makefile.am
 +++ b/mingw-w64-crt/Makefile.am
 @@ -118,7 +118,7 @@ src_libmingw32=include/oscalls.h include/internal.h include/sect_attribs.h \
@@ -76,7 +76,7 @@ index 000000000..112d8e3c7
 +  (*__MINGW_IMP_SYMBOL(_Exit))(status);
 +}
 diff --git a/mingw-w64-crt/lib-common/api-ms-win-crt-runtime-l1-1-0.def.in b/mingw-w64-crt/lib-common/api-ms-win-crt-runtime-l1-1-0.def.in
-index 9f03de541..c6acf96d4 100644
+index 06a8f3790..b3729dac3 100644
 --- a/mingw-w64-crt/lib-common/api-ms-win-crt-runtime-l1-1-0.def.in
 +++ b/mingw-w64-crt/lib-common/api-ms-win-crt-runtime-l1-1-0.def.in
 @@ -4,7 +4,7 @@ EXPORTS
@@ -95,9 +95,9 @@ index 9f03de541..c6acf96d4 100644
 -_exit
 +_exit DATA
  _fpieee_flt
- ; DATA added manually
- _fpreset DATA
-@@ -96,7 +96,7 @@ _wcserror_s
+ _fpreset F_LD80(DATA) ; DATA added manually
+ _get_doserrno
+@@ -95,7 +95,7 @@ _wcserror_s
  _wperror
  _wsystem
  abort
@@ -106,7 +106,7 @@ index 9f03de541..c6acf96d4 100644
  ; Don't use the float env functions from UCRT; fesetround doesn't seem to have
  ; any effect on the FPU control word as required by other libmingwex math
  ; routines.
-@@ -110,7 +110,7 @@ fesetexceptflag DATA
+@@ -109,7 +109,7 @@ fesetexceptflag DATA
  fesetround DATA
  fetestexcept DATA
  perror
@@ -116,7 +116,7 @@ index 9f03de541..c6acf96d4 100644
  set_terminate
  signal
 diff --git a/mingw-w64-crt/lib-common/msvcr120_app.def.in b/mingw-w64-crt/lib-common/msvcr120_app.def.in
-index c207c442f..ff7bc95f2 100644
+index 86747ec4e..6d410c631 100644
 --- a/mingw-w64-crt/lib-common/msvcr120_app.def.in
 +++ b/mingw-w64-crt/lib-common/msvcr120_app.def.in
 @@ -1243,7 +1243,7 @@ F_I386(_except1)
@@ -138,7 +138,7 @@ index c207c442f..ff7bc95f2 100644
  exp2
  exp2f
 diff --git a/mingw-w64-crt/lib-common/msvcrt.def.in b/mingw-w64-crt/lib-common/msvcrt.def.in
-index 0d1223af5..f3f22d8f8 100644
+index 7a029b8d4..fac3b136f 100644
 --- a/mingw-w64-crt/lib-common/msvcrt.def.in
 +++ b/mingw-w64-crt/lib-common/msvcrt.def.in
 @@ -580,7 +580,7 @@ _execv
@@ -160,7 +160,7 @@ index 0d1223af5..f3f22d8f8 100644
  fabs DATA
  fclose
 diff --git a/mingw-w64-crt/lib-common/ucrtbase-common.def.in b/mingw-w64-crt/lib-common/ucrtbase-common.def.in
-index 69052d686..086b7cca0 100644
+index 02e698d96..685af0682 100644
 --- a/mingw-w64-crt/lib-common/ucrtbase-common.def.in
 +++ b/mingw-w64-crt/lib-common/ucrtbase-common.def.in
 @@ -60,7 +60,7 @@ F_DEBUG(_CrtSetReportMode)
@@ -182,9 +182,9 @@ index 69052d686..086b7cca0 100644
  F_DEBUG(_expand_dbg)
  _fclose_nolock
 @@ -2328,7 +2328,7 @@ erfcf
- F_ARM_ANY(erfcl) ; Can't use long double functions from the CRT on x86
+ F_LD64(erfcl) ; Can't use long double functions from the CRT on x86
  erff
- F_ARM_ANY(erfl) ; Can't use long double functions from the CRT on x86
+ F_LD64(erfl) ; Can't use long double functions from the CRT on x86
 -exit
 +exit DATA
  exp
