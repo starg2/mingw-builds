@@ -102,6 +102,7 @@ PKG_CONFIGURE_FLAGS=(
 	)
 	--enable-graphite
 	--enable-checking=release
+	--enable-mingw-wildcard
 	--enable-fully-dynamic-string
 	--enable-version-specific-runtime-libs
 	--enable-libstdcxx-filesystem-ts=yes
