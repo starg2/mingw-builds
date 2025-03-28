@@ -35,13 +35,13 @@
 
 # **************************************************************************
 
-PKG_VERSION=0.26
+PKG_VERSION=0.27
 PKG_TYPE=.tar.xz
 PKG_NAME=$BUILD_ARCHITECTURE-isl-${PKG_VERSION}-$LINK_TYPE_SUFFIX
 PKG_DIR_NAME=isl-${PKG_VERSION}
-PKG_SHA256=a0b5cb06d24f9fa9e77b55fabbe9a3c94a336190345c2555f9915bb38e976504
+PKG_SHA256=6d8babb59e7b672e8cb7870e874f3f7b813b6e00e6af3f8b04f7579965643d5c
 PKG_URLS=(
-	"https://libisl.sourceforge.io/isl-${PKG_VERSION}${PKG_TYPE}|sha256:${PKG_SHA256}"
+	"https://prdownloads.sourceforge.net/libisl/isl-${PKG_VERSION}${PKG_TYPE}|sha256:${PKG_SHA256}"
 )
 
 PKG_PRIORITY=prereq
