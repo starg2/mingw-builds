@@ -66,6 +66,8 @@ PKG_CONFIGURE_FLAGS=(
 	#
 	--enable-sdk=all
 	--enable-secure-api
+	--enable-idl
+	--without-widl
 	$( [[ -n "$WIN32_WINNT_VERSION" ]] \
 		&& echo "--with-default-win32-winnt=$WIN32_WINNT_VERSION"
 	)
