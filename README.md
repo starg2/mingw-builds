@@ -156,7 +156,8 @@ At the moment, successfully building the following versions:
   gcc-12-branch (currently 12.4.1-prerelease)
   gcc-13-branch (currently 13.3.1-prerelease)
   gcc-14-branch (currently 14.2.1-prerelease)
-  gcc-trunk (currently 15.0.0 snapshot)
+  gcc-15-branch (currently 15.0.1-prerelease)
+  gcc-trunk (currently 16.0.0 snapshot)
 ```
 
 Builds also contains patches for building Python 2.7.9 and 3.4.3 versions for support gdb pretty printers.
