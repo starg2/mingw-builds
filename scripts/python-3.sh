@@ -35,7 +35,7 @@
 
 # **************************************************************************
 
-PKG_VERSION=3.12.9
+PKG_VERSION=3.12.10
 PKG_NAME=Python-${PKG_VERSION}
 PKG_DIR_NAME=Python-${PKG_VERSION}
 PKG_TYPE=git
@@ -48,7 +48,7 @@ PKG_PRIORITY=extra
 #
 
 PKG_EXECUTE_AFTER_UNCOMPRESS=(
-	"git reset --hard 1b241aa8572ee8cd4131fffca838b6bbdf5a7b5e" # Reset to this commit hash for reproducible builds
+	"git reset --hard a02e0a47cbcc3cac6bf01463241b0208ec654a75" # Reset to this commit hash for reproducible builds
 )
 
 #
