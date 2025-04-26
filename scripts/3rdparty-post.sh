@@ -64,8 +64,9 @@ function python_deps_post {
 	}
 
 	rm -f $LIBS_DIR/bin/{bz*,bunzip2}
+	rm -f $LIBS_DIR/bin/{gdbm_dump.exe,gdbm_load.exe,gdbmtool.exe}
 	rm -f $LIBS_DIR/bin/{tclsh.exe,tclsh86.exe,openssl.exe,capinfo.exe,captoinfo.exe,clear.exe,idle,infocmp.exe}
-	rm -f $LIBS_DIR/bin/{infotocap.exe,c_rehash,ncursesw5-config,reset.exe,sqlite3.exe,tabs.exe}
+	rm -f $LIBS_DIR/bin/{infotocap.exe,c_rehash,ncurses*-config,reset.exe,sqlite3.exe,sqlite3_analyzer,tabs.exe}
 	rm -f $LIBS_DIR/bin/{tic.exe,toe.exe,tput.exe,tset.exe,wish.exe,wish86.exe,xmlwf,testgdbm.exe}
 	rm -f $LIBS_DIR/bin/{lzmadec.exe,lzmainfo.exe,unxz.exe,xz*}
 	rm -f $LIBS_DIR/bin/*-w64-mingw32-{captoinfo.exe,clear.exe,infocmp.exe,infotocap.exe,reset.exe,tabs.exe,tic.exe,toe.exe,tput.exe,tset.exe}
@@ -76,8 +77,7 @@ function python_deps_post {
 	find $LIBS_DIR/lib -type f -name *.la -print0 | xargs -0 rm -f
 	find $LIBS_DIR/lib -type d -name __pycache__ -print0 | xargs -0 rm -rf
 	rm -rf $LIBS_DIR/man
-	rm -rf $LIBS_DIR/share/man
-	rm -rf $LIBS_DIR/share/info
+	rm -rf $LIBS_DIR/share/{doc,info,man}
 }
 
 # **************************************************************************
