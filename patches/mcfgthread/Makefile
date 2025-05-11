@@ -6,6 +6,7 @@ mcfgthread_cflags = \
 	-masm=intel \
 	-msse2 \
 	-mfpmath=sse \
+	-momit-leaf-frame-pointer \
 	-fno-stack-protector \
 	-fstrict-aliasing \
 	-ffast-math \
@@ -16,11 +17,13 @@ mcfgthread_cflags = \
 
 mcfgthread_ldflags = \
 	-nostdlib \
-	-Wl,-enable-auto-image-base \
-	-Wl,-gc-sections \
-	-Wl,-subsystem,windows:6.1 \
-	-Wl,-kill-at \
-	-Wl,-exclude-all-symbols
+	-Wl,--dynamicbase \
+	-Wl,--nxcompat \
+	-Wl,--gc-sections \
+	-Wl,--subsystem,windows:6.1 \
+	-Wl,--kill-at \
+	-Wl,--exclude-all-symbols \
+	-Wl,--disable-auto-import
 
 mcfgthread_public_headers = \
 	fwd.h \
@@ -74,8 +77,8 @@ all: libmcfgthread.a libmcfgthread-$(ABI_MAJOR).dll
 libmcfgthread.a: $(mcfgthread_obj_min:%=static/%) $(mcfgthread_obj_ex:%=static/%)
 	$(AR) rcs $@ $?
 
-libmcfgthread-$(ABI_MAJOR).dll: $(mcfgthread_obj_min:%=shared/%) $(mcfgthread_obj_ex:%=shared/%) $(SOURCE_DIR)/mcfgthread.def version.o
-	$(CC) -shared $(LDFLAGS) $(mcfgthread_ldflags) -Wl,--out-implib,libmcfgthread.dll.a -o $@ $+ -lkernel32 -lntdll
+libmcfgthread-$(ABI_MAJOR).dll: $(mcfgthread_obj_min:%=shared/%) $(mcfgthread_obj_ex:%=shared/%) libkernel32.a libntdll.a version.o
+	$(CC) -shared $(LDFLAGS) $(mcfgthread_ldflags) -Wl,--out-implib,libmcfgthread.dll.a -o $@ $+
 
 static/%.o: $(SOURCE_DIR)/%.c
 	mkdir -p static
@@ -88,6 +91,9 @@ shared/%.o: $(SOURCE_DIR)/%.c
 version.o: $(SOURCE_DIR)/version.rc $(SOURCE_DIR)/version.manifest
 	$(RC) -I. -c65001 -o $@ -i $<
 
+lib%.a: $(SOURCE_DIR)/%$(DEF_SUFFIX).def
+	$(DLLTOOL) -k -l $@ -d $<
+
 install-common: libmcfgthread.a libmcfgthread-$(ABI_MAJOR).dll
 	mkdir -p $(DESTDIR)/{bin,include/mcfgthread,lib}
 	for i in $(mcfgthread_public_headers); do cp -f $(SOURCE_DIR)/$$i $(DESTDIR)/include/mcfgthread/; done
@@ -98,4 +104,4 @@ install: install-common
 	cp -f libmcfgthread-$(ABI_MAJOR).dll $(DESTDIR)/bin/
 
 install-strip: install-common
-	strip -s -o $(DESTDIR)/bin/libmcfgthread-$(ABI_MAJOR).dll libmcfgthread-$(ABI_MAJOR).dll
+	$(STRIP) -s -o $(DESTDIR)/bin/libmcfgthread-$(ABI_MAJOR).dll libmcfgthread-$(ABI_MAJOR).dll
