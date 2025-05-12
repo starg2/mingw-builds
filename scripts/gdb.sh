@@ -35,11 +35,11 @@
 
 # **************************************************************************
 
-PKG_VERSION=16.2
+PKG_VERSION=16.3
 PKG_NAME=gdb-${PKG_VERSION}
 PKG_DIR_NAME=gdb-${PKG_VERSION}
 PKG_TYPE=.tar.xz
-PKG_SHA256=4002cb7f23f45c37c790536a13a720942ce4be0402d929c9085e92f10d480119
+PKG_SHA256=bcfcd095528a987917acf9fff3f1672181694926cc18d609c99d0042c00224c5
 PKG_URLS=(
 	"https://ftpmirror.gnu.org/gnu/gdb/gdb-${PKG_VERSION}${PKG_TYPE}|sha256:${PKG_SHA256}"
 )
