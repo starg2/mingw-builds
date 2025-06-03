@@ -703,6 +703,10 @@ case $BUILD_ARCHITECTURE in
 	;;
 esac
 
+[[ $THREADS_MODEL == posix ]] && {
+	export PATH=$RUNTIME_DIR/$BUILD_ARCHITECTURE-winpthreads-$RUNTIME_VERSION/bin:$PATH
+}
+
 [[ $THREADS_MODEL == mcf ]] && {
 	export PATH=$PREREQ_DIR/$BUILD_ARCHITECTURE-mcfgthread/bin:$PATH
 }
