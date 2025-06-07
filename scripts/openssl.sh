@@ -35,11 +35,11 @@
 
 # **************************************************************************
 
-PKG_VERSION=3.4.1
+PKG_VERSION=3.5.0
 PKG_NAME=openssl-${PKG_VERSION}
 PKG_DIR_NAME=openssl-${PKG_VERSION}
 PKG_TYPE=.tar.gz
-PKG_SHA256=002a2d6b30b58bf4bea46c43bdd96365aaf8daa6c428782aa4feee06da197df3
+PKG_SHA256=344d0a79f1a9b08029b0744e2cc401a43f9c90acd1044d09a530b4885a8e9fc0
 PKG_URLS=(
 	"https://github.com/openssl/openssl/releases/download/openssl-${PKG_VERSION}/openssl-${PKG_VERSION}${PKG_TYPE}|sha256:${PKG_SHA256}"
 )
@@ -51,7 +51,7 @@ PKG_CONFIGURE_SCRIPT=Configure
 #
 
 PKG_PATCHES=(
-	openssl/openssl-3.4.0-relocation.patch
+	openssl/openssl-3.5.0-relocation.patch
 )
 
 #
