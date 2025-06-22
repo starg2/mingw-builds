@@ -39,6 +39,7 @@ jobs:
           subversion
           tar
           zip
+          unzip
           p7zip
           make
           patch
