@@ -61,8 +61,8 @@ jobs:
     - name: Install host toolchain
       shell: msys2 {0}
       run: |
-        wget -P toolchains/ https://github.com/mstorsjo/llvm-mingw/releases/download/20250613/llvm-mingw-20250613-ucrt-aarch64.zip
-        unzip toolchains/llvm-mingw-20250613-ucrt-aarch64.zip -d toolchains/
+        wget -q -P toolchains/ https://github.com/mstorsjo/llvm-mingw/releases/download/20250613/llvm-mingw-20250613-ucrt-aarch64.zip
+        unzip -q toolchains/llvm-mingw-20250613-ucrt-aarch64.zip -d toolchains/
         mv toolchains/llvm-mingw-20250613-ucrt-aarch64 toolchains/mingwarm64
 
     - name: Build
