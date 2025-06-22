@@ -726,6 +726,15 @@ case $BUILD_ARCHITECTURE in
 			export PATH=$PREFIX/bin:$LIBS_DIR/bin:$ORIGINAL_PATH
 		}
 	;;
+	aarch64)
+		[[ ! -f $aarch64_HOST_MINGW_PATH/bin/gcc ]] && {
+			die "gcc is not exists in the \"$aarch64_HOST_MINGW_PATH/bin\" directory. terminate."
+		}
+		export PATH=$LIBS_DIR/bin:$aarch64_HOST_MINGW_PATH/bin:$ORIGINAL_PATH
+		[[ $BOOTSTRAPINGALL == yes && -f $PREFIX/bin/gcc ]] && {
+			export PATH=$PREFIX/bin:$LIBS_DIR/bin:$ORIGINAL_PATH
+		}
+	;;
 esac
 
 [[ $THREADS_MODEL == posix ]] && {
