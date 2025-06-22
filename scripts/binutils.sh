@@ -43,10 +43,12 @@ PKG_NAME=binutils-${PKG_VERSION}
 	PKG_NAME=$BUILD_ARCHITECTURE-$PKG_NAME-nomulti
 }
 PKG_DIR_NAME=binutils-${PKG_VERSION}
-PKG_TYPE=.tar.xz
-PKG_SHA256=ce2017e059d63e67ddb9240e9d4ec49c2893605035cd60e92ad53177f4377237
+#PKG_TYPE=.tar.xz
+PKG_TYPE=git
+#PKG_SHA256=ce2017e059d63e67ddb9240e9d4ec49c2893605035cd60e92ad53177f4377237
 PKG_URLS=(
-	"https://ftpmirror.gnu.org/gnu/binutils/binutils-${PKG_VERSION}${PKG_TYPE}|sha256:${PKG_SHA256}"
+	#"https://ftpmirror.gnu.org/gnu/binutils/binutils-${PKG_VERSION}${PKG_TYPE}|sha256:${PKG_SHA256}"
+	"https://github.com/Windows-on-ARM-Experiments/binutils-woarm64.git|branch:woarm64|repo:$PKG_TYPE|module:$PKG_DIR_NAME"
 )
 
 PKG_PRIORITY=prereq

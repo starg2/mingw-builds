@@ -47,13 +47,14 @@ PKG_NAME=mingw-w64-${RUNTIME_VERSION}
 	MINGW_PKG_DIR_VERSION_SUFFIX=""
 	PKG_TYPE=git
 	PKG_URLS=(
-		"https://git.code.sf.net/p/mingw-w64/mingw-w64|branch:$RUNTIME_BRANCH|repo:$PKG_TYPE"
+		#"https://git.code.sf.net/p/mingw-w64/mingw-w64|branch:$RUNTIME_BRANCH|repo:$PKG_TYPE"
+		"https://github.com/Windows-on-ARM-Experiments/mingw-woarm64.git|branch:woarm64|repo:$PKG_TYPE|module:mingw-w64"
 	)
-	[[ $RUNTIME_BRANCH == master ]] && {
-		PKG_EXECUTE_AFTER_UNCOMPRESS=(
-			"git reset --hard b45abfec4e116b33620de597b99b1f0af3ab6a6a" # Reset to this commit hash for reproducible builds
-		)
-	}
+	# [[ $RUNTIME_BRANCH == master ]] && {
+	# 	PKG_EXECUTE_AFTER_UNCOMPRESS=(
+	# 		"git reset --hard b45abfec4e116b33620de597b99b1f0af3ab6a6a" # Reset to this commit hash for reproducible builds
+	# 	)
+	# }
 }
 
 PKG_DIR_NAME=mingw-w64${MINGW_PKG_DIR_VERSION_SUFFIX}
