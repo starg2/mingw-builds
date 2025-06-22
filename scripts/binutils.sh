@@ -101,6 +101,7 @@ PKG_CONFIGURE_FLAGS=(
 	--disable-nls
 	--disable-shared
 	--disable-werror
+	--disable-gdb
 	#
 	$( [[ $BUILD_SHARED_GCC == yes ]] \
 		&& echo "$LINK_TYPE_SHARED" \
