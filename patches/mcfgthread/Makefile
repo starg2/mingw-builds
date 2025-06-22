@@ -3,9 +3,6 @@ mcfgthread_cflags = \
 	-D_WIN32_WINNT=0x0601 \
 	-D__USE_MINGW_ANSI_STDIO \
 	-U_FORTIFY_SOURCE \
-	-masm=intel \
-	-msse2 \
-	-mfpmath=sse \
 	-momit-leaf-frame-pointer \
 	-fno-stack-protector \
 	-fstrict-aliasing \
@@ -14,6 +11,13 @@ mcfgthread_cflags = \
 	-fno-omit-frame-pointer \
 	-fmerge-all-constants \
 	-fasynchronous-unwind-tables
+
+ifneq ($(ARCH),aarch64)
+mcfgthread_cflags += \
+	-masm=intel \
+	-msse2 \
+	-mfpmath=sse
+endif
 
 mcfgthread_ldflags = \
 	-nostdlib \
