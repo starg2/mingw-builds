@@ -64,6 +64,7 @@ jobs:
         wget -q -P toolchains/ https://github.com/mstorsjo/llvm-mingw/releases/download/20250613/llvm-mingw-20250613-ucrt-aarch64.zip
         unzip -q toolchains/llvm-mingw-20250613-ucrt-aarch64.zip -d toolchains/
         mv toolchains/llvm-mingw-20250613-ucrt-aarch64 toolchains/mingwarm64
+        echo "$PWD/toolchains/mingwarm64/aarch64-w64-mingw32/bin" >> $GITHUB_PATH
 
     - name: Build
       shell: msys2 {0}
