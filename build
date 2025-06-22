@@ -98,6 +98,8 @@ readonly RUN_ARGS="$@"
 	echo "    --mtune-x32='<arch>'       - tune for x32 target"
 	echo "    --march-x64='<arch>'       - arch for x64 target"
 	echo "    --mtune-x64='<arch>'       - tune for x64 target"
+	echo "    --march-arm64='<arch>'     - arch for arm64 target"
+	echo "    --mtune-arm64='<arch>'     - tune for arm64 target"
 	echo "    --show-subtargets          - show list of subtargets for selected '--mode'"
 	echo "    --short-output             - reduce output by not printing skipped subtargets"
 	echo "    --logviewer-command        - use this command for the log viewer"
@@ -225,6 +227,8 @@ while [[ $# > 0 ]]; do
 		--mtune-x32=*) PROCESSOR_OPTIMIZATION_TUNE_32=${1/--mtune-x32=/} ;;
 		--march-x64=*) PROCESSOR_OPTIMIZATION_ARCH_64=${1/--march-x64=/} ;;
 		--mtune-x64=*) PROCESSOR_OPTIMIZATION_TUNE_64=${1/--mtune-x64=/} ;;
+		--march-arm64=*) PROCESSOR_OPTIMIZATION_ARCH_ARM64=${1/--march-arm64=/} ;;
+		--mtune-arm64=*) PROCESSOR_OPTIMIZATION_TUNE_ARM64=${1/--mtune-arm64=/} ;;
 		--cflags=*) BASE_CFLAGS="$BASE_CFLAGS ${1/--cflags=/}" ;;
 		--cxxflags=*) BASE_CXXFLAGS="$BASE_CXXFLAGS ${1/--cxxflags=/}" ;;
 		--cppflags=*) BASE_CPPFLAGS="$BASE_CPPFLAGS ${1/--cppflags=/}" ;;
@@ -658,13 +662,20 @@ fi
 				readonly PROCESSOR_OPTIMIZATION="--with-arch-32=$PROCESSOR_OPTIMIZATION_ARCH_32 --with-arch-64=$PROCESSOR_OPTIMIZATION_ARCH_64"
 				readonly PROCESSOR_TUNE="--with-tune-32=$PROCESSOR_OPTIMIZATION_TUNE_32 --with-tune-64=$PROCESSOR_OPTIMIZATION_TUNE_64"
 		} || {
-			[[ $BUILD_ARCHITECTURE == i686 ]] && {
-				readonly PROCESSOR_OPTIMIZATION="--with-arch=$PROCESSOR_OPTIMIZATION_ARCH_32"
-				readonly PROCESSOR_TUNE="--with-tune=$PROCESSOR_OPTIMIZATION_TUNE_32"
-			} || {
-				readonly PROCESSOR_OPTIMIZATION="--with-arch=$PROCESSOR_OPTIMIZATION_ARCH_64"
-				readonly PROCESSOR_TUNE="--with-tune=$PROCESSOR_OPTIMIZATION_TUNE_64"
-			}
+			case $BUILD_ARCHITECTURE in
+				i686)
+					readonly PROCESSOR_OPTIMIZATION="--with-arch=$PROCESSOR_OPTIMIZATION_ARCH_32"
+					readonly PROCESSOR_TUNE="--with-tune=$PROCESSOR_OPTIMIZATION_TUNE_32"
+				;;
+				x86_64)
+					readonly PROCESSOR_OPTIMIZATION="--with-arch=$PROCESSOR_OPTIMIZATION_ARCH_64"
+					readonly PROCESSOR_TUNE="--with-tune=$PROCESSOR_OPTIMIZATION_TUNE_64"
+				;;
+				aarch64)
+					readonly PROCESSOR_OPTIMIZATION="--with-arch=$PROCESSOR_OPTIMIZATION_ARCH_ARM64"
+					readonly PROCESSOR_TUNE="--with-tune=$PROCESSOR_OPTIMIZATION_TUNE_ARM64"
+				;;
+			esac
 		}
 	} || {
 		readonly BASE_BUILD_DIR=$ROOT_DIR/$BUILD_MODE-${BUILD_ARCHITECTURE}$REV_STRING
