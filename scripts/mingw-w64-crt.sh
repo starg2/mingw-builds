@@ -89,11 +89,17 @@ PKG_EXECUTE_AFTER_PATCH=(
 	CRTPREFIX=$RUNTIME_DIR/$BUILD_ARCHITECTURE-mingw-w64-${RUNTIME_VERSION}-multi
 } || {
 	CRTPREFIX=$RUNTIME_DIR/$BUILD_ARCHITECTURE-mingw-w64-${RUNTIME_VERSION}-nomulti
-	[[ $BUILD_ARCHITECTURE == i686 ]] && {
-		LIBCONF="--enable-lib32 --disable-lib64"
-	} || {
-		LIBCONF="--disable-lib32 --enable-lib64"
-	}
+	case $BUILD_ARCHITECTURE in
+		i686)
+			LIBCONF="--enable-lib32 --disable-lib64"
+		;;
+		x86_64)
+			LIBCONF="--disable-lib32 --enable-lib64"
+		;;
+		aarch64)
+			LIBCONF="--disable-lib32 --disable-lib64 --enable-libarm64"
+		;;
+	esac
 }
 
 [[ -d $PREREQ_DIR ]] && {
