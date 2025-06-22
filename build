@@ -50,10 +50,10 @@ source $TOP_DIR/library/config.sh
 readonly RUN_ARGS="$@"
 [[ $# == 1 && $1 == --help || $[ $# == 0 ] == 1 ]] && {
 	echo "usage:"
-	echo "  ./${0##*/} --mode=[clang|gcc|python]-version --arch=<i686|x86_64> [OPTIONS]"
+	echo "  ./${0##*/} --mode=[clang|gcc|python]-version --arch=<i686|x86_64|aarch64> [OPTIONS]"
 	echo "  help:"
 	echo "    --mode=<[clang|gcc|python]-version>  - specify building software with version"
-	echo "    --arch=<i686|x86_64>       - specifies the architecture"
+	echo "    --arch=<i686|x86_64|aarch64> - specifies the architecture"
 	echo "    --exceptions=<type>        - specifies exceptions model for GCC"
 	echo "    --enable-languages=<langs> - comma separated list(without spaces) of gcc supported languages. available languages:"
 	echo "                                 ada,c,c++,fortran,objc,obj-c++"
@@ -216,7 +216,7 @@ while [[ $# > 0 ]]; do
 		--arch=*)
 			readonly BUILD_ARCHITECTURE=${1/--arch=/}
 			case $BUILD_ARCHITECTURE in
-				x86_64|i686)
+				x86_64|i686|aarch64)
                 ;;
 				*) die "Unsupported architecture: \"$BUILD_ARCHITECTURE\". terminate."  ;;
 			esac
@@ -532,11 +532,12 @@ mkdir -p \
 
 case $EXCEPTIONS_MODEL in
 	dwarf)
-		[[ ${BUILD_ARCHITECTURE} == x86_64 ]] && {
-			die "DWARF exceptions not allowed on x86_64 architecture. terminate."
+		[[ ${BUILD_ARCHITECTURE} != i686 ]] && {
+			die "DWARF exceptions only allowed on i686 architecture. terminate."
 		}
 		readonly EXCEPTIONS_MODEL_I686=dwarf
 		readonly EXCEPTIONS_MODEL_X86_64=seh
+		readonly EXCEPTIONS_MODEL_AARCH64=seh
 	;;
 	seh)
 		[[ ${BUILD_ARCHITECTURE} == i686 ]] && {
@@ -549,17 +550,21 @@ case $EXCEPTIONS_MODEL in
 		
 		readonly EXCEPTIONS_MODEL_I686=dwarf
 		readonly EXCEPTIONS_MODEL_X86_64=seh
+		readonly EXCEPTIONS_MODEL_AARCH64=seh
 	;;
 	sjlj)
 		readonly EXCEPTIONS_MODEL_I686=sjlj
 		readonly EXCEPTIONS_MODEL_X86_64=sjlj
+		readonly EXCEPTIONS_MODEL_AARCH64=sjlj
 	;;
 	dwarfseh)
 		[[ -z ${BUILD_ARCHITECTURE} ]] && { EXCEPTIONS_MODEL=""; }
+		[[ ${BUILD_ARCHITECTURE} == aarch64 ]] && { EXCEPTIONS_MODEL=seh; }
 		[[ ${BUILD_ARCHITECTURE} == x86_64 ]] && { EXCEPTIONS_MODEL=seh; }
 		[[ ${BUILD_ARCHITECTURE} == i686 ]] && { EXCEPTIONS_MODEL=dwarf; }
 		readonly EXCEPTIONS_MODEL_I686=dwarf
 		readonly EXCEPTIONS_MODEL_X86_64=seh
+		readonly EXCEPTIONS_MODEL_AARCH64=seh
 	;;
 esac
 
@@ -586,11 +591,16 @@ if [[ -n $PROVIDED_TOOLCHAIN ]] ; then
 	TOOLCHAINS_DIR="$PROVIDED_TOOLCHAIN"
 	i686_HOST_MINGW_PATH=$TOOLCHAINS_DIR/mingw32
 	x86_64_HOST_MINGW_PATH=$TOOLCHAINS_DIR/mingw64
+	aarch64_HOST_MINGW_PATH=$TOOLCHAINS_DIR/mingwarm64
 else
 	# The host toolchains for sjlj exception model are no longer officially provided.
 	# Rather than trying to download non-existent files, tell the user to install one manually.
 	[[ $EXCEPTIONS_MODEL == sjlj ]] && {
 		die "host toolchains for sjlj exception model must be installed manually (--provided-toolchain=...). terminate."
+	}
+
+	[[ $BUILD_ARCHITECTURE == aarch64 ]] && {
+		die "host toolchains for aarch64 architecture must be installed manually (--provided-toolchain=...). terminate."
 	}
 
 	echo "Using downloaded toolchain"
@@ -599,6 +609,7 @@ fi
 readonly TOOLCHAINS_DIR
 readonly i686_HOST_MINGW_PATH
 readonly x86_64_HOST_MINGW_PATH
+readonly aarch64_HOST_MINGW_PATH
 
 if [[ -z "$PROVIDED_TOOLCHAIN" ]] ; then
 	mkdir -p $TOOLCHAINS_DIR
