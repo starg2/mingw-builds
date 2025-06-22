@@ -87,7 +87,7 @@ PKG_CONFIGURE_FLAGS=(
 		|| echo "--disable-multilib"
 	)
 	#
-	$( [[ $ARCHITECTURE == x86_64 ]] \
+	$( [[ $BUILD_ARCHITECTURE != i686 ]] \
 		&& echo "--enable-64-bit-bfd" \
 	)
 	#
@@ -100,6 +100,7 @@ PKG_CONFIGURE_FLAGS=(
 	--disable-rpath
 	--disable-nls
 	--disable-shared
+	--disable-werror
 	#
 	$( [[ $BUILD_SHARED_GCC == yes ]] \
 		&& echo "$LINK_TYPE_SHARED" \
