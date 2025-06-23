@@ -124,6 +124,7 @@ PKG_CONFIGURE_FLAGS=(
 	--disable-nls
 	--disable-werror
 	--disable-symvers
+	--disable-win32-utf8-manifest
 	#
 	--with-gnu-as
 	--with-gnu-ld
