@@ -153,6 +153,7 @@ function func_get_arch_bit {
 	case $1 in
 		i686) echo "32" ;;
 		x86_64) echo "64" ;;
+		aarch64) echo "arm64" ;;
 	esac
 }
 
