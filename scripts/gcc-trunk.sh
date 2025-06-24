@@ -144,6 +144,7 @@ PKG_CONFIGURE_FLAGS=(
 	CPPFLAGS="$COMMON_CPPFLAGS"
 	LDFLAGS="$COMMON_LDFLAGS $( [[ $BUILD_ARCHITECTURE == i686 ]] && echo -Wl,--large-address-aware )"
 	LD_FOR_TARGET=$PREFIX/bin/ld.exe
+	--with-stage1-ldflags="\"$LDFLAGS -Wl,--disable-dynamicbase -static\""
 	--with-boot-ldflags="\"$LDFLAGS -Wl,--disable-dynamicbase -static-libstdc++ -static-libgcc\""
 )
 
