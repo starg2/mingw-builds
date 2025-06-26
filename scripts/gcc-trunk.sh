@@ -75,6 +75,7 @@ PKG_CONFIGURE_FLAGS=(
 	--with-native-system-header-dir=/$TARGET/include
 	#
 	$LINK_TYPE_GCC
+	--disable-shared
 	#
 	$( [[ $USE_MULTILIB == yes ]] \
 		&& echo "--enable-targets=all --enable-multilib" \
