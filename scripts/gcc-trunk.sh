@@ -84,7 +84,7 @@ PKG_CONFIGURE_FLAGS=(
 		&& echo "--enable-languages=$ENABLE_LANGUAGES" \
 		|| echo "--enable-languages=$ENABLE_LANGUAGES,lto"
 	)
-	--enable-libstdcxx-time=yes
+	--disable-libstdcxx-time
 	--enable-threads=$THREADS_MODEL
 	$( [[ $THREADS_MODEL == win32 ]] \
 		&& echo "--enable-libstdcxx-threads=yes" \
