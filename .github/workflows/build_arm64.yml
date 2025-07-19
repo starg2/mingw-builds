@@ -68,7 +68,7 @@ jobs:
 
     - name: Build
       shell: msys2 {0}
-      run: ./build ${{ matrix.config.build_cmd }} --provided-toolchain=$(pwd)/toolchains || 7z a /c/buildroot/archives/gcc-trunk.7z /c/buildroot/aarch64-trunk-win32-seh-ucrt-rt_v14-rev0/build/gcc-trunk
+      run: ./build ${{ matrix.config.build_cmd }} --provided-toolchain=$(pwd)/toolchains || 7z a /c/buildroot/archives/gcc-trunk.7z /c/buildroot/aarch64-trunk-*-seh-ucrt-rt_v14-rev0
 
     - name: Upload
       uses: actions/upload-artifact@v4
