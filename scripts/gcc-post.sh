@@ -67,7 +67,7 @@ function gcc_post_install {
 
 	# libgcc_s.a
 	cp -f $PREFIX/lib/gcc/$TARGET/lib/libgcc_s.a $PREFIX/$TARGET/lib/ \
-		|| die "Cannot copy libgcc_s.a to $PREFIX/$TARGET/lib"
+		|| true # die "Cannot copy libgcc_s.a to $PREFIX/$TARGET/lib"
 
 	func_has_lang objc
 	local is_objc=$?
