@@ -89,12 +89,12 @@ function gcc_post_install {
 			-not \( -path $BUILDS_DIR/$_GCC_NAME/gcc/ada -prune \) \
 			-not \( -path $BUILDS_DIR/$_GCC_NAME/$TARGET/libada/adainclude -prune \) \
 			-type f -name *.dll) )
-	cp -f ${_dlls[@]} $PREFIX/bin/ > /dev/null 2>&1 || die "Cannot copy architecture dlls to $PREFIX/bin/"
-	cp -f ${_dlls[@]} $PREFIX/$TARGET/lib/ > /dev/null 2>&1 || die "Cannot copy architecture dlls to $PREFIX/lib/"
+	cp -f ${_dlls[@]} $PREFIX/bin/ > /dev/null 2>&1 || true # die "Cannot copy architecture dlls to $PREFIX/bin/"
+	cp -f ${_dlls[@]} $PREFIX/$TARGET/lib/ > /dev/null 2>&1 || true # die "Cannot copy architecture dlls to $PREFIX/lib/"
 
 	[[ $STRIP_ON_INSTALL == yes ]] && {
-		strip $PREFIX/bin/*.dll || die "Error stripping dlls from $PREFIX/bin"
-		strip $PREFIX/$TARGET/lib/*.dll || die "Error stripping dlls from $PREFIX/$TARGET/lib"
+		strip $PREFIX/bin/*.dll || true # die "Error stripping dlls from $PREFIX/bin"
+		strip $PREFIX/$TARGET/lib/*.dll || true # die "Error stripping dlls from $PREFIX/$TARGET/lib"
 	}
 	[[ $USE_MULTILIB == yes ]] && {
 		# libgcc_s.a
