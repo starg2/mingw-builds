@@ -35,7 +35,7 @@
 
 # **************************************************************************
 
-PKG_VERSION=2.44
+PKG_VERSION=2.45
 PKG_NAME=binutils-${PKG_VERSION}
 [[ $USE_MULTILIB == yes ]] && {
 	PKG_NAME=$BUILD_ARCHITECTURE-$PKG_NAME-multi
@@ -44,7 +44,7 @@ PKG_NAME=binutils-${PKG_VERSION}
 }
 PKG_DIR_NAME=binutils-${PKG_VERSION}
 PKG_TYPE=.tar.xz
-PKG_SHA256=ce2017e059d63e67ddb9240e9d4ec49c2893605035cd60e92ad53177f4377237
+PKG_SHA256=c50c0e7f9cb188980e2cc97e4537626b1672441815587f1eab69d2a1bfbef5d2
 PKG_URLS=(
 	"https://ftpmirror.gnu.org/gnu/binutils/binutils-${PKG_VERSION}${PKG_TYPE}|sha256:${PKG_SHA256}"
 )
@@ -60,6 +60,7 @@ PKG_PATCHES=(
 	binutils/0022-libiberty-missing-typedef.patch
 	binutils/0110-binutils-mingw-gnu-print.patch
 	binutils/0120-fix-ld-path-corruption.patch
+	binutils/windres-fix-crash.patch
 )
 
 #
