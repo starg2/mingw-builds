@@ -76,6 +76,7 @@ PKG_CONFIGURE_FLAGS=(
 	#
 	$LINK_TYPE_GCC
 	--disable-shared
+	--disable-plugins
 	#
 	$( [[ $USE_MULTILIB == yes ]] \
 		&& echo "--enable-targets=all --enable-multilib" \
