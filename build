@@ -410,14 +410,7 @@ while [[ $# > 0 ]]; do
 			esac
 		;;
 		--enable-wildcard) CRT_GLOB=yes ;;
-		--with-default-msvcrt=*)
-			MSVCRT_VERSION=${1/--with-default-msvcrt=/}
-			case $MSVCRT_VERSION in
-				msvcr120*|ucrt*)
-					MSVCRT_PHOBOS_OK="yes"
-				;;
-			esac
-		;;
+		--with-default-msvcrt=*) MSVCRT_VERSION=${1/--with-default-msvcrt=/} ;;
 		--with-default-win32-winnt=*) WIN32_WINNT_VERSION=${1/--with-default-win32-winnt=/} ;;
 		--threads=*)
 			THREADS_MODEL=${1/--threads=/}
@@ -524,6 +517,12 @@ mkdir -p \
 		die "you can't build multitarget MinGW-W64 using 32-bit OS. terminate."
 	}
 }
+
+case $MSVCRT_VERSION in
+	msvcr120*|ucrt*)
+		MSVCRT_PHOBOS_OK="yes"
+	;;
+esac
 
 [[ -z $EXCEPTIONS_MODEL ]] && {
     [[ $BUILD_ARCHITECTURE == i686 ]] && {
