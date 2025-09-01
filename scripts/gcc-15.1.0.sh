@@ -60,6 +60,14 @@ PKG_PATCHES=(
 	gcc/gcc-10-libgcc-ldflags.patch
 	gcc/gcc-12-replace-abort-with-fancy_abort.patch
 	gcc/gcc-13-mcf-sjlj-avoid-infinite-recursion.patch
+	gcc/9002-native-tls.patch
+	gcc/9003-libstdc-Avoid-thread-local-states-for-MCF-thread-mod.patch
+)
+
+#
+
+PKG_EXECUTE_AFTER_PATCH=(
+	"autoreconf -vfi"
 )
 
 #
@@ -87,6 +95,9 @@ PKG_CONFIGURE_FLAGS=(
 	--enable-threads=$THREADS_MODEL
 	$( [[ $THREADS_MODEL == win32 ]] \
 		&& echo "--enable-libstdcxx-threads=yes" \
+	)
+	$( [[ $ENABLE_TLS == yes ]] \
+		&& echo "--enable-tls" \
 	)
 	--enable-libgomp
 	--enable-libatomic

@@ -68,6 +68,7 @@ readonly RUN_ARGS="$@"
 	echo "    --no-multilib              - build GCC without multilib support"
 	echo "    --rev=N                    - specifies number of the build revision"
 	echo "    --threads=<model>          - specifies the threads model for GCC/libstdc++, available: win32, posix, mcf"
+	echo "    --enable-tls               - enables native thread-local storage"
 	echo "    --static-gcc               - build static GCC"
 	echo "    --enable-wildcard          - enable wildcard expansion by mingw-w64 runtime"
 	echo "    --with-default-msvcrt=     - specifies msvc version the toolchain will target"
@@ -428,6 +429,7 @@ while [[ $# > 0 ]]; do
 				;;
 			esac
 		;;
+		--enable-tls) ENABLE_TLS=yes ;;
 		--rev=*) REV_NUM=${1/--rev=/} ;;
 		--with-testsuite) PKG_RUN_TESTSUITE=yes ;;
 		--show-subtargets) SHOW_SUBTARGETS=yes ;;
@@ -570,6 +572,10 @@ esac
 
 [[ $BUILD_MODE == gcc && $THREADS_MODEL == mcf && `func_map_gcc_name_to_gcc_version $BUILD_MODE_VERSION | cut -d. -f1` -lt 13 ]] && {
 	die "\"$THREADS_MODEL\" thread model requires GCC 13 or later. terminate."
+}
+
+[[ $BUILD_MODE == gcc && $ENABLE_TLS == yes && `func_map_gcc_name_to_gcc_version $BUILD_MODE_VERSION | cut -d. -f1` -lt 15 ]] && {
+	die "native thread-local storage implementation requires GCC 15 or later. terminate."
 }
 
 [[ $BUILD_MODE != gcc && $COMPRESSING_SRCS == yes ]] && {
