@@ -1,8 +1,8 @@
 diff --git a/Modules/_multiprocessing/semaphore.c b/Modules/_multiprocessing/semaphore.c
-index 49174d39f1..a478809396 100644
+index 8c6a4a27920..ae1ecc9e551 100644
 --- a/Modules/_multiprocessing/semaphore.c
 +++ b/Modules/_multiprocessing/semaphore.c
-@@ -616,14 +616,14 @@ _multiprocessing_SemLock__get_value_impl(SemLockObject *self)
+@@ -631,14 +631,14 @@ _multiprocessing_SemLock__get_value_impl(SemLockObject *self)
      PyErr_SetNone(PyExc_NotImplementedError);
      return NULL;
  #else
@@ -19,7 +19,7 @@ index 49174d39f1..a478809396 100644
  #endif
  }
  
-@@ -648,10 +648,10 @@ _multiprocessing_SemLock__is_zero_impl(SemLockObject *self)
+@@ -663,10 +663,10 @@ _multiprocessing_SemLock__is_zero_impl(SemLockObject *self)
          Py_RETURN_FALSE;
      }
  #else
@@ -32,24 +32,11 @@ index 49174d39f1..a478809396 100644
  #endif
  }
  
-diff --git a/Modules/_winapi.c b/Modules/_winapi.c
-index 0cf9eb9ec6..122dd983a2 100644
---- a/Modules/_winapi.c
-+++ b/Modules/_winapi.c
-@@ -550,7 +550,7 @@ _winapi_CreateJunction_impl(PyObject *module, LPCWSTR src_path,
-         /* overallocate by a few array elements */
-         LUID_AND_ATTRIBUTES privs[4];
-     } tp, previousTp;
--    int previousTpSize = 0;
-+    DWORD previousTpSize = 0;
- 
-     /* Reparse data buffer */
-     const USHORT prefix_len = 4;
 diff --git a/Modules/posixmodule.c b/Modules/posixmodule.c
-index 4a9c232704..1677bced12 100644
+index d81f59df5c0..eea211b3b8c 100644
 --- a/Modules/posixmodule.c
 +++ b/Modules/posixmodule.c
-@@ -4545,7 +4545,7 @@ os__path_splitroot_impl(PyObject *module, path_t *path)
+@@ -5163,7 +5163,7 @@ os__path_splitroot_impl(PyObject *module, path_t *path)
  /*[clinic end generated code: output=ab7f1a88b654581c input=dc93b1d3984cffb6]*/
  {
      wchar_t *buffer;
@@ -58,7 +45,7 @@ index 4a9c232704..1677bced12 100644
      PyObject *result = NULL;
      HRESULT ret;
  
-@@ -5922,9 +5922,9 @@ os_execv_impl(PyObject *module, path_t *path, PyObject *argv)
+@@ -6966,9 +6966,9 @@ os_execv_impl(PyObject *module, path_t *path, PyObject *argv)
  
      _Py_BEGIN_SUPPRESS_IPH
  #ifdef HAVE_WEXECV
@@ -70,7 +57,7 @@ index 4a9c232704..1677bced12 100644
  #endif
      _Py_END_SUPPRESS_IPH
  
-@@ -6003,9 +6003,9 @@ os_execve_impl(PyObject *module, path_t *path, PyObject *argv, PyObject *env)
+@@ -7054,9 +7054,9 @@ os_execve_impl(PyObject *module, path_t *path, PyObject *argv, PyObject *env)
      else
  #endif
  #ifdef HAVE_WEXECV
@@ -82,7 +69,7 @@ index 4a9c232704..1677bced12 100644
  #endif
      _Py_END_SUPPRESS_IPH
  
-@@ -6622,11 +6622,11 @@ os_spawnv_impl(PyObject *module, int mode, path_t *path, PyObject *argv)
+@@ -7706,11 +7706,11 @@ os_spawnv_impl(PyObject *module, int mode, path_t *path, PyObject *argv)
      Py_BEGIN_ALLOW_THREADS
      _Py_BEGIN_SUPPRESS_IPH
  #ifdef HAVE_WSPAWNV
@@ -96,7 +83,7 @@ index 4a9c232704..1677bced12 100644
  #endif
      _Py_END_SUPPRESS_IPH
      Py_END_ALLOW_THREADS
-@@ -6738,12 +6738,12 @@ os_spawnve_impl(PyObject *module, int mode, path_t *path, PyObject *argv,
+@@ -7822,12 +7822,12 @@ os_spawnve_impl(PyObject *module, int mode, path_t *path, PyObject *argv,
      Py_BEGIN_ALLOW_THREADS
      _Py_BEGIN_SUPPRESS_IPH
  #ifdef HAVE_WSPAWNV
@@ -112,10 +99,10 @@ index 4a9c232704..1677bced12 100644
      _Py_END_SUPPRESS_IPH
      Py_END_ALLOW_THREADS
 diff --git a/PC/launcher.c b/PC/launcher.c
-index 09ac7d902c..7d8228e583 100644
+index ffd7f7ee8f2..23072e0e4d7 100644
 --- a/PC/launcher.c
 +++ b/PC/launcher.c
-@@ -1912,7 +1912,7 @@ process(int argc, wchar_t ** argv)
+@@ -1914,7 +1914,7 @@ process(int argc, wchar_t ** argv)
      {
          FILE *f;
          char buffer[4096]; /* 4KB should be enough for anybody */
