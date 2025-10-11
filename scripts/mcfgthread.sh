@@ -35,7 +35,7 @@
 
 # **************************************************************************
 
-PKG_VERSION=2.1.ga
+PKG_VERSION=2.2.ga
 PKG_NAME=$PKG_ARCHITECTURE-mcfgthread-${PKG_VERSION}
 PKG_DIR_NAME=mcfgthread-${PKG_VERSION}
 PKG_TYPE=git
@@ -48,14 +48,12 @@ PKG_PRIORITY=prereq
 #
 
 PKG_EXECUTE_AFTER_UNCOMPRESS=(
-	"git reset --hard cc3e589e0fcebfce2adfa3a803ec21804d730e94" # Reset to this commit hash for reproducible builds
+	"git reset --hard 14a7b005d6e3d33d7579160423955d1603a12dba" # Reset to this commit hash for reproducible builds
 )
 
 #
 
-PKG_PATCHES=(
-	mcfgthread/build-Declare-BaseGetNamedObjectDirectory-in-KERNEL32.patch
-)
+PKG_PATCHES=()
 
 #
 

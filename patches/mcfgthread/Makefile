@@ -13,7 +13,7 @@ mcfgthread_cflags = \
 	-fno-ident \
 	-fno-omit-frame-pointer \
 	-fmerge-all-constants \
-	-fasynchronous-unwind-tables
+	-funwind-tables
 
 mcfgthread_ldflags = \
 	-nostdlib \
