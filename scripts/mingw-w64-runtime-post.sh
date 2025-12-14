@@ -57,16 +57,26 @@ function runtime_post_install {
 		RUNTIMEPREFIX=$RUNTIME_DIR/$BUILD_ARCHITECTURE-mingw-w64-$RUNTIME_VERSION-nomulti
 	}
 
+	[[ $BUILD_MODE == clang ]] && {
+		local _GCC_NAME=$CLANG_GCC_VERSION
+	} || {
+		local _GCC_NAME=$GCC_NAME
+	}
+
+	local _gcc_version=$(func_map_gcc_name_to_gcc_version $_GCC_NAME)
+
 	cp -rfv $RUNTIMEPREFIX/* $PREFIX/$TARGET || { echo "1"; return 1; }
 	cp -rfv $RUNTIMEPREFIX/* $PREFIX/mingw || { echo "2"; return 1; }
 
-	mkdir -pv $PREFIX/bin $PREFIX/$TARGET/{lib,include}
+	mkdir -pv $PREFIX/bin $PREFIX/$TARGET/{bin,lib,include} $PREFIX/libexec/gcc/$TARGET/$_gcc_version/
 
 	# iconv
 	cp -fv $PREREQ_DIR/$BUILD_ARCHITECTURE-libiconv-$LINK_TYPE_SUFFIX/include/*.h $PREFIX/$TARGET/include/ || { echo "3"; return 1; }
 	[[ $GCC_DEPS_LINK_TYPE == *--enable-shared* ]] && {
 		cp -fv $PREREQ_DIR/$BUILD_ARCHITECTURE-libiconv-$LINK_TYPE_SUFFIX/lib/*.dll.a $PREFIX/$TARGET/lib/ || { echo "4"; return 1; }
 		cp -fv $PREREQ_DIR/$BUILD_ARCHITECTURE-libiconv-$LINK_TYPE_SUFFIX/bin/*.dll $PREFIX/bin/ || { echo "5"; return 1; }
+		cp -fv $PREREQ_DIR/$BUILD_ARCHITECTURE-libiconv-$LINK_TYPE_SUFFIX/bin/*.dll $PREFIX/$TARGET/bin/ || { echo "5-2"; return 1; }
+		cp -fv $PREREQ_DIR/$BUILD_ARCHITECTURE-libiconv-$LINK_TYPE_SUFFIX/bin/*.dll $PREFIX/libexec/gcc/$TARGET/$_gcc_version/ || { echo "5-3"; return 1; }
 		cp -fv $PREREQ_DIR/$BUILD_ARCHITECTURE-libiconv-$LINK_TYPE_SUFFIX/bin/*.dll $PREFIX/$TARGET/lib/ || { echo "6"; return 1; }
 	}
 	[[ $GCC_DEPS_LINK_TYPE == *--enable-static* ]] && {
@@ -78,6 +88,8 @@ function runtime_post_install {
 	[[ $GCC_DEPS_LINK_TYPE == *--enable-shared* ]] && {
 		cp -fv $PREREQ_DIR/$BUILD_ARCHITECTURE-zlib-$LINK_TYPE_SUFFIX/lib/libz.dll.a $PREFIX/$TARGET/lib/ || { echo "9"; return 1; }
 		cp -fv $PREREQ_DIR/$BUILD_ARCHITECTURE-zlib-$LINK_TYPE_SUFFIX/bin/*.dll $PREFIX/bin/ || { echo "10"; return 1; }
+		cp -fv $PREREQ_DIR/$BUILD_ARCHITECTURE-zlib-$LINK_TYPE_SUFFIX/bin/*.dll $PREFIX/$TARGET/bin/ || { echo "10-2"; return 1; }
+		cp -fv $PREREQ_DIR/$BUILD_ARCHITECTURE-zlib-$LINK_TYPE_SUFFIX/bin/*.dll $PREFIX/libexec/gcc/$TARGET/$_gcc_version/ || { echo "10-3"; return 1; }
 		cp -fv $PREREQ_DIR/$BUILD_ARCHITECTURE-zlib-$LINK_TYPE_SUFFIX/bin/*.dll $PREFIX/$TARGET/lib/ || { echo "11"; return 1; }
 	}
 	[[ $GCC_DEPS_LINK_TYPE == *--enable-static* ]] && {
@@ -86,6 +98,10 @@ function runtime_post_install {
 
 	# winpthreads
 	cp -fv $RUNTIME_DIR/$BUILD_ARCHITECTURE-winpthreads-$RUNTIME_VERSION/bin/libwinpthread-1.dll $PREFIX/bin/ || { echo "13"; return 1; }
+	[[ $THREADS_MODEL == posix ]] && {
+		cp -fv $RUNTIME_DIR/$BUILD_ARCHITECTURE-winpthreads-$RUNTIME_VERSION/bin/libwinpthread-1.dll $PREFIX/$TARGET/bin/ || { echo "13-2"; return 1; }
+		cp -fv $RUNTIME_DIR/$BUILD_ARCHITECTURE-winpthreads-$RUNTIME_VERSION/bin/libwinpthread-1.dll $PREFIX/libexec/gcc/$TARGET/$_gcc_version/ || { echo "13-3"; return 1; }
+	}
 	cp -fv $RUNTIME_DIR/$BUILD_ARCHITECTURE-winpthreads-$RUNTIME_VERSION/bin/libwinpthread-1.dll $PREFIX/$TARGET/lib/ || { echo "14"; return 1; }
 	cp -fv $RUNTIME_DIR/$BUILD_ARCHITECTURE-winpthreads-$RUNTIME_VERSION/lib/libwinpthread.dll.a $PREFIX/$TARGET/lib/ || { echo "15"; return 1; }
 	cp -fv $RUNTIME_DIR/$BUILD_ARCHITECTURE-winpthreads-$RUNTIME_VERSION/lib/libpthread.dll.a $PREFIX/$TARGET/lib/ || { echo "16"; return 1; }
@@ -97,6 +113,8 @@ function runtime_post_install {
 		# mcfgthread
 		mkdir -pv $PREFIX/$TARGET/include/mcfgthread
 		cp -fv $PREREQ_DIR/$BUILD_ARCHITECTURE-mcfgthread/bin/libmcfgthread*.dll $PREFIX/bin/ || { echo "101"; return 1; }
+		cp -fv $PREREQ_DIR/$BUILD_ARCHITECTURE-mcfgthread/bin/libmcfgthread*.dll $PREFIX/$TARGET/bin/ || { echo "101-2"; return 1; }
+		cp -fv $PREREQ_DIR/$BUILD_ARCHITECTURE-mcfgthread/bin/libmcfgthread*.dll $PREFIX/libexec/gcc/$TARGET/$_gcc_version/ || { echo "101-3"; return 1; }
 		cp -fv $PREREQ_DIR/$BUILD_ARCHITECTURE-mcfgthread/bin/libmcfgthread*.dll $PREFIX/$TARGET/lib/ || { echo "102"; return 1; }
 		cp -fv $PREREQ_DIR/$BUILD_ARCHITECTURE-mcfgthread/lib/libmcfgthread.dll.a $PREFIX/$TARGET/lib/ || { echo "103"; return 1; }
 		cp -fv $PREREQ_DIR/$BUILD_ARCHITECTURE-mcfgthread/lib/libmcfgthread.a $PREFIX/$TARGET/lib/ || { echo "104"; return 1; }
