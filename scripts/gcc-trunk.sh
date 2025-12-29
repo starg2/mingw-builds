@@ -88,6 +88,7 @@ PKG_CONFIGURE_FLAGS=(
 	$( [[ $THREADS_MODEL == win32 ]] \
 		&& echo "--enable-libstdcxx-threads=yes" \
 	)
+	--enable-tls
 	--enable-libgomp
 	--enable-libatomic
 	$( [[ "$MSVCRT_PHOBOS_OK" == yes && "$D_LANG_ENABLED" == yes ]] \
