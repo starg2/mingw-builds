@@ -40,7 +40,8 @@ PKG_NAME=gcc-${PKG_VERSION}
 PKG_DIR_NAME=gcc-${PKG_VERSION}
 PKG_TYPE=git
 PKG_URLS=(
-	"https://gcc.gnu.org/git/gcc.git|branch:master|repo:$PKG_TYPE|module:$PKG_DIR_NAME"
+	#"https://gcc.gnu.org/git/gcc.git|branch:master|repo:$PKG_TYPE|module:$PKG_DIR_NAME"
+	"https://github.com/gcc-mirror/gcc.git|branch:master|repo:$PKG_TYPE|module:$PKG_DIR_NAME"
 )
 
 PKG_PRIORITY=main
