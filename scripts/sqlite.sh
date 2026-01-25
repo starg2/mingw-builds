@@ -35,13 +35,13 @@
 
 # **************************************************************************
 
-PKG_VERSION=3500400
+PKG_VERSION=3510200
 PKG_NAME=sqlite-${PKG_VERSION}
 PKG_DIR_NAME=sqlite-autoconf-${PKG_VERSION}
 PKG_TYPE=.tar.gz
-PKG_SHA256=a3db587a1b92ee5ddac2f66b3edb41b26f9c867275782d46c3a088977d6a5b18
+PKG_SHA256=fbd89f866b1403bb66a143065440089dd76100f2238314d92274a082d4f2b7bb
 PKG_URLS=(
-	"https://www.sqlite.org/2025/sqlite-autoconf-${PKG_VERSION}${PKG_TYPE}|sha256:${PKG_SHA256}"
+	"https://www.sqlite.org/2026/sqlite-autoconf-${PKG_VERSION}${PKG_TYPE}|sha256:${PKG_SHA256}"
 )
 PKG_PRIORITY=extra
 
