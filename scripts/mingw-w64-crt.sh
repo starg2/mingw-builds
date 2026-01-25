@@ -64,10 +64,14 @@ PKG_PATCHES=(
 		} || {
 			echo "mingw-w64/9002-v$RUNTIME_MAJOR_VERSION-crt-Provide-wrappers-for-exit-in-libmingwex.patch"
 		}
-		[[ $RUNTIME_MAJOR_VERSION -ge 13 ]] && {
-			echo "mingw-w64/9003-v13-crt-Implement-standard-conforming-termination-support.patch"
+		[[ $RUNTIME_MAJOR_VERSION -ge 14 ]] && {
+			echo "mingw-w64/9003-v14-crt-Implement-standard-conforming-termination-support.patch"
 		} || {
-			echo "mingw-w64/9003-v11-crt-Implement-standard-conforming-termination-support.patch"
+			[[ $RUNTIME_MAJOR_VERSION -ge 13 ]] && {
+				echo "mingw-w64/9003-v13-crt-Implement-standard-conforming-termination-support.patch"
+			} || {
+				echo "mingw-w64/9003-v11-crt-Implement-standard-conforming-termination-support.patch"
+			}
 		}
 	})
 )
