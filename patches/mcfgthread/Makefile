@@ -3,16 +3,33 @@ mcfgthread_cflags = \
 	-D_WIN32_WINNT=0x0601 \
 	-D__USE_MINGW_ANSI_STDIO \
 	-U_FORTIFY_SOURCE \
+	-fno-stack-protector \
+	-fno-omit-frame-pointer \
+	-momit-leaf-frame-pointer \
+	-fmerge-all-constants \
+	-fstrict-aliasing \
+	-ffast-math \
+	-fdata-sections \
+	-Werror=conversion \
+	-Werror=sign-compare \
+	-Werror=sign-conversion \
+	-Werror=write-strings \
+	-Werror=return-type \
+	-Werror=double-promotion \
+	-Wmissing-declarations \
+	-Wswitch-enum \
+	-Wmissing-field-initializers \
+	-Wshadow \
+	-Wunused-function \
+	-Wunused-label \
+	-Wunused-local-typedefs \
+	-Wunused-but-set-variable \
+	-Wunused-but-set-parameter \
+	-Wunused-const-variable \
 	-masm=intel \
 	-msse2 \
 	-mfpmath=sse \
-	-momit-leaf-frame-pointer \
-	-fno-stack-protector \
-	-fstrict-aliasing \
-	-ffast-math \
 	-fno-ident \
-	-fno-omit-frame-pointer \
-	-fmerge-all-constants \
 	-funwind-tables
 
 mcfgthread_ldflags = \
@@ -91,7 +108,13 @@ shared/%.o: $(SOURCE_DIR)/%.c
 version.o: $(SOURCE_DIR)/version.rc $(SOURCE_DIR)/version.manifest
 	$(RC) -I. -c65001 -o $@ -i $<
 
-lib%.a: $(SOURCE_DIR)/%$(DEF_SUFFIX).def
+%.i386.def: $(SOURCE_DIR)/%.def.in
+	sed -E 's/(@[0-9]+)@/\1/g' $< > $@
+
+%.def: $(SOURCE_DIR)/%.def.in
+	sed -E 's/(@[0-9]+)@//g' $< > $@
+
+lib%.a: %$(DEF_SUFFIX).def
 	$(DLLTOOL) -k -l $@ -d $<
 
 install-common: libmcfgthread.a libmcfgthread-$(ABI_MAJOR).dll
