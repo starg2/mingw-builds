@@ -35,11 +35,11 @@
 
 # **************************************************************************
 
-PKG_VERSION=2.7.3
+PKG_VERSION=2.7.4
 PKG_NAME=expat-${PKG_VERSION}
 PKG_DIR_NAME=expat-${PKG_VERSION}
 PKG_TYPE=.tar.xz
-PKG_SHA256=71df8f40706a7bb0a80a5367079ea75d91da4f8c65c58ec59bcdfbf7decdab9f
+PKG_SHA256=9e9cabb457c1e09de91db2706d8365645792638eb3be1f94dbb2149301086ac0
 PKG_URLS=(
 	"https://github.com/libexpat/libexpat/releases/download/R_${PKG_VERSION//./_}/expat-${PKG_VERSION}${PKG_TYPE}|sha256:${PKG_SHA256}"
 )
