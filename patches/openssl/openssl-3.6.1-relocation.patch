@@ -29,7 +29,7 @@
 +        reloc = single_path_relocation_lib(OPENSSLBIN, OPENSSLDIR);
 +    }
 +    return reloc;
- # else
+ #else
      return OPENSSLDIR;
  #endif
 @@ -164,6 +171,12 @@
