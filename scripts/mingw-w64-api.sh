@@ -47,7 +47,11 @@ PKG_PRIORITY=runtime
 
 #
 
-PKG_PATCHES=()
+PKG_PATCHES=(
+	$( [[ $RUNTIME_MAJOR_VERSION -lt 14 ]] \
+		&& echo "mingw-w64/mswsock-add-SIO_UDP_NETRESET.patch" \
+	)
+)
 
 #
 
