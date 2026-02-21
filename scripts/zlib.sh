@@ -35,11 +35,11 @@
 
 # **************************************************************************
 
-PKG_VERSION=1.3.1
+PKG_VERSION=1.3.2
 PKG_NAME=$PKG_ARCHITECTURE-zlib-${PKG_VERSION}-$LINK_TYPE_SUFFIX
 PKG_DIR_NAME=zlib-${PKG_VERSION}
-PKG_TYPE=.tar.gz
-PKG_SHA256=9a93b2b7dfdac77ceba5a558a580e74667dd6fede4585b91eefb60f03b72df23
+PKG_TYPE=.tar.xz
+PKG_SHA256=d7a0654783a4da529d1bb793b7ad9c3318020af77667bcae35f95d0e42a792f3
 PKG_URLS=(
 	"https://github.com/madler/zlib/releases/download/v${PKG_VERSION}/zlib-${PKG_VERSION}${PKG_TYPE}|sha256:${PKG_SHA256}"
 )
@@ -50,9 +50,8 @@ PKG_LNDIR=yes
 #
 
 PKG_PATCHES=(
-	zlib/01-zlib-1.2.13-buildsys.mingw.patch
+	zlib/01-zlib-1.3.2-buildsys.mingw.patch
 	zlib/03-dont-put-sodir-into-L.mingw.patch
-	zlib/04-fix-largefile-support.patch
 	#zlib/607.patch
 )
 
