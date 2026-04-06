@@ -51,7 +51,7 @@ PKG_NAME=mingw-w64-${RUNTIME_VERSION}
 	)
 	[[ $RUNTIME_BRANCH == master ]] && {
 		PKG_EXECUTE_AFTER_UNCOMPRESS=(
-			"git reset --hard 43f2643cbde20aff1c4b89a98c78d0b4b0fe90c2" # Reset to this commit hash for reproducible builds
+			"git reset --hard 239fa3f2dfd2ec6db1b2382dcc48e8eb9ef20761" # Reset to this commit hash for reproducible builds
 		)
 	}
 }
