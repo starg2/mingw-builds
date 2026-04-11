@@ -40,8 +40,21 @@ PKG_NAME=mingw-w64-${RUNTIME_VERSION}
 [[ $RUNTIME_BRANCH == release ]] && {
 	MINGW_PKG_DIR_VERSION_SUFFIX="-${RUNTIME_VERSION}"
 	PKG_TYPE=.tar.bz2
+
+	case $RUNTIME_VERSION in
+		v13.0.0)
+			PKG_SHA256=5afe822af5c4edbf67daaf45eec61d538f49eef6b19524de64897c6b95828caf
+		;;
+		v14.0.0)
+			PKG_SHA256=6eaf921d9eb987d3820b364ea9775bc19b965ec81490b6fdd716526c28e1995c
+		;;
+		:)
+			PKG_SHA256=
+		;;
+	esac
+
 	PKG_URLS=(
-		"https://downloads.sourceforge.net/project/mingw-w64/mingw-w64/mingw-w64-release/mingw-w64-${RUNTIME_VERSION}${PKG_TYPE}"
+		"https://downloads.sourceforge.net/project/mingw-w64/mingw-w64/mingw-w64-release/mingw-w64-${RUNTIME_VERSION}${PKG_TYPE}|sha256:${PKG_SHA256}"
 	)
 } || {
 	MINGW_PKG_DIR_VERSION_SUFFIX=""
