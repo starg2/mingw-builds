@@ -1,0 +1,159 @@
+From 0fba51e8f39b245a3c0c2b75dad2619ed749f320 Mon Sep 17 00:00:00 2001
+From: Jonathan Wakely <jwakely@redhat.com>
+Date: Fri, 15 May 2026 10:41:33 +0100
+Subject: [PATCH] libstdc++: Make configure check for atomics work on Windows
+ [PR125312]
+
+The changes in r16-427-g86627faec10da5 do not work for native mingw-w64
+builds because the #include with a hardcoded unix-style path doesn't
+work for a native mingw-w64 compiler. This results in configure
+detecting that native mingw builds do not support atomic builtins for
+the _Atomic_word type, causing non-inline atomics to be used for
+__gnu_cxx::__exchange_and_add and __gnu_cxx::__atomic_add, which is an
+unintented ABI change (and inconsistent with mingw cross-compilers where
+the configure test passes and so enables the inline functions using
+atomic builtins).
+
+This attempts to solve the problem by copying the atomic_word.h header
+to the current working directory, so it can be included without using an
+absolute path.
+
+libstdc++-v3/ChangeLog:
+
+	PR libstdc++/125312
+	* acinclude.m4 (GLIBCXX_ENABLE_ATOMIC_BUILTINS): Copy header
+	into cwd instead of including it via an absolute path.
+	* configure: Regenerate.
+
+(cherry picked from commit 1b191d0a23f3b82f6543913f8c3c2e46942af859)
+---
+ libstdc++-v3/acinclude.m4 | 15 +++++++++++++--
+ libstdc++-v3/configure    | 23 +++++++++++++++++------
+ 2 files changed, 30 insertions(+), 8 deletions(-)
+
+diff --git a/libstdc++-v3/acinclude.m4 b/libstdc++-v3/acinclude.m4
+index 8dc9e17b214c..e6e4f7b394a5 100644
+--- a/libstdc++-v3/acinclude.m4
++++ b/libstdc++-v3/acinclude.m4
+@@ -3755,6 +3755,15 @@ AC_DEFUN([GLIBCXX_ENABLE_ATOMIC_BUILTINS], [
+     esac
+   fi
+ 
++  # The $glibcxx_builddir/include/$target/bits/atomic_word.h header is created
++  # by include/Makefile so isn't available during configure. Copy it from the
++  # source dir to $PWD so that we don't include it using an absolute path,
++  # which does not work for win32 native builds (PR libstdc++/125312).
++  if ! $LN_S "${glibcxx_srcdir}/config/${atomic_word_dir}/atomic_word.h" ./
++  then
++    AC_MSG_ERROR([cannot create ./atomic_word.h])
++  fi
++
+   if test "$atomic_builtins_link_tests" = yes; then
+ 
+     # Do link tests.
+@@ -3763,7 +3772,7 @@ AC_DEFUN([GLIBCXX_ENABLE_ATOMIC_BUILTINS], [
+ 
+     AC_CACHE_CHECK([for atomic builtins for _Atomic_word],
+ 	glibcxx_cv_atomic_word,
+-	[AC_TRY_LINK([#include "${glibcxx_srcdir}/config/$atomic_word_dir/atomic_word.h"],
++	[AC_TRY_LINK([#include "atomic_word.h"],
+ 		     [_Atomic_word a = 0, b;
+ 		      b = __atomic_fetch_add(&a, 1, __ATOMIC_ACQ_REL);],
+ 		     [glibcxx_cv_atomic_word=yes],
+@@ -3779,7 +3788,7 @@ AC_DEFUN([GLIBCXX_ENABLE_ATOMIC_BUILTINS], [
+ 
+     cat > conftest.$ac_ext << EOF
+ [#]line __oline__ "configure"
+-[#]include "${glibcxx_srcdir}/config/$atomic_word_dir/atomic_word.h"
++[#]include "atomic_word.h"
+ int main()
+ {
+   _Atomic_word a = 0, b;
+@@ -3799,6 +3808,8 @@ EOF
+     rm -f conftest*
+   fi
+ 
++  rm -f ./atomic_word.h
++
+   CXXFLAGS="$old_CXXFLAGS"
+   AC_LANG_RESTORE
+ 
+diff --git a/libstdc++-v3/configure b/libstdc++-v3/configure
+index 6713e4504b1c..359545c4bceb 100755
+--- a/libstdc++-v3/configure
++++ b/libstdc++-v3/configure
+@@ -16422,6 +16422,15 @@ ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
+     esac
+   fi
+ 
++  # The $glibcxx_builddir/include/$target/bits/atomic_word.h header is created
++  # by include/Makefile so isn't available during configure. Copy it from the
++  # source dir to $PWD so that we don't include it using an absolute path,
++  # which does not work for win32 native builds (PR libstdc++/125312).
++  if ! $LN_S "${glibcxx_srcdir}/config/${atomic_word_dir}/atomic_word.h" ./
++  then
++    as_fn_error $? "cannot create ./atomic_word.h" "$LINENO" 5
++  fi
++
+   if test "$atomic_builtins_link_tests" = yes; then
+ 
+     # Do link tests.
+@@ -16438,7 +16447,7 @@ else
+ fi
+ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+ /* end confdefs.h.  */
+-#include "${glibcxx_srcdir}/config/$atomic_word_dir/atomic_word.h"
++#include "atomic_word.h"
+ int
+ main ()
+ {
+@@ -16468,8 +16477,8 @@ $as_echo "$glibcxx_cv_atomic_word" >&6; }
+     # Fake what AC_TRY_COMPILE does.
+ 
+     cat > conftest.$ac_ext << EOF
+-#line 16471 "configure"
+-#include "${glibcxx_srcdir}/config/$atomic_word_dir/atomic_word.h"
++#line 16480 "configure"
++#include "atomic_word.h"
+ int main()
+ {
+   _Atomic_word a = 0, b;
+@@ -16495,6 +16504,8 @@ $as_echo "$glibcxx_cv_atomic_word" >&6; }
+     rm -f conftest*
+   fi
+ 
++  rm -f ./atomic_word.h
++
+   CXXFLAGS="$old_CXXFLAGS"
+   ac_ext=c
+ ac_cpp='$CPP $CPPFLAGS'
+@@ -16614,7 +16625,7 @@ $as_echo "mutex" >&6; }
+   # unnecessary for this test.
+ 
+     cat > conftest.$ac_ext << EOF
+-#line 16617 "configure"
++#line 16628 "configure"
+ int main()
+ {
+   _Decimal32 d1;
+@@ -16656,7 +16667,7 @@ ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
+   # unnecessary for this test.
+ 
+   cat > conftest.$ac_ext << EOF
+-#line 16659 "configure"
++#line 16670 "configure"
+ template<typename T1, typename T2>
+   struct same
+   { typedef T2 type; };
+@@ -54145,7 +54156,7 @@ $as_echo "$glibcxx_cv_libbacktrace_atomics" >&6; }
+     CXXFLAGS='-O0 -S'
+ 
+     cat > conftest.$ac_ext << EOF
+-#line 54148 "configure"
++#line 54159 "configure"
+ #include <stddef.h>
+ int main()
+ {
+-- 
+2.43.7
+
