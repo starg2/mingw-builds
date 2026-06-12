@@ -35,7 +35,7 @@
 
 # **************************************************************************
 
-PKG_VERSION=2.46.0
+PKG_VERSION=2.46.1
 PKG_NAME=binutils-${PKG_VERSION}
 [[ $USE_MULTILIB == yes ]] && {
 	PKG_NAME=$BUILD_ARCHITECTURE-$PKG_NAME-multi
@@ -44,7 +44,7 @@ PKG_NAME=binutils-${PKG_VERSION}
 }
 PKG_DIR_NAME=binutils-${PKG_VERSION}
 PKG_TYPE=.tar.xz
-PKG_SHA256=d75a94f4d73e7a4086f7513e67e439e8fcdcbb726ffe63f4661744e6256b2cf2
+PKG_SHA256=e127a709cba24c76de8936cb7083dd768f28cd37eb010492e2f19b71eb1294e4
 PKG_URLS=(
 	"https://ftpmirror.gnu.org/gnu/binutils/binutils-${PKG_VERSION}${PKG_TYPE}|sha256:${PKG_SHA256}"
 )
