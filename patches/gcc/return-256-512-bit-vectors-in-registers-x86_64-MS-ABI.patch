@@ -1,0 +1,124 @@
+From ae4efe523b80321fd885412fbc98e2102abc6178 Mon Sep 17 00:00:00 2001
+From: oltolm <oleg.tolmatcev@gmail.com>
+Date: Tue, 19 May 2026 19:34:42 +0200
+Subject: i386: return 256/512-bit vectors in registers for x86_64 MS ABI
+ [PR89597]
+
+On x86_64 Windows targets using MS ABI, GCC classified 256-bit and
+512-bit vector returns as memory returns.  That caused hidden sret
+pointer returns where YMM0/ZMM0 returns are expected.
+
+Teach MS ABI return classification to keep 32-byte and 64-byte vector
+returns in registers when AVX/AVX512F is enabled, matching the return
+register selection path.
+
+Also extend function_value_ms_64 so 32-byte and 64-byte eligible vector
+returns are mapped to the SSE register class (YMM0/ZMM0 lanes).
+
+Add tests for x86_64-*-mingw* that verify 256-bit and 512-bit vector
+returns use YMM0/ZMM0 codegen.
+
+gcc:
+
+	PR target/89597
+	* config/i386/i386.cc (function_value_ms_64): Handle 32-byte and
+	64-byte vector returns in registers when supported.
+	(ix86_return_in_memory): Do not force 32-byte/64-byte eligible
+	vector returns to memory for MS ABI.
+
+gcc/testsuite:
+
+	* gcc.target/i386/pr89597-1.c: New test.
+	* gcc.target/i386/pr89597-2.c: New test.
+
+Signed-off-by: Oleg Tolmatcev <oleg.tolmatcev@gmail.com>
+Signed-off-by: Jonathan Yong <10walls@gmail.com>
+---
+ gcc/config/i386/i386.cc                   | 18 +++++++++++++++---
+ gcc/testsuite/gcc.target/i386/pr89597-1.c | 12 ++++++++++++
+ gcc/testsuite/gcc.target/i386/pr89597-2.c | 12 ++++++++++++
+ 3 files changed, 39 insertions(+), 3 deletions(-)
+ create mode 100644 gcc/testsuite/gcc.target/i386/pr89597-1.c
+ create mode 100644 gcc/testsuite/gcc.target/i386/pr89597-2.c
+
+diff --git a/gcc/config/i386/i386.cc b/gcc/config/i386/i386.cc
+index 2744c7495780..a5559fe8a330 100644
+--- a/gcc/config/i386/i386.cc
++++ b/gcc/config/i386/i386.cc
+@@ -4346,9 +4346,17 @@ function_value_ms_64 (machine_mode orig_mode, machine_mode mode,
+
+   if (TARGET_SSE)
+     {
+-      switch (GET_MODE_SIZE (mode))
++      unsigned int mode_size = GET_MODE_SIZE (mode);
++
++      switch (mode_size)
+ 	{
+ 	case 16:
++	case 32:
++	case 64:
++	  if (mode_size == 32 && !TARGET_AVX)
++	    break;
++	  if (mode_size == 64 && !TARGET_AVX512F)
++	    break;
+ 	  if (valtype != NULL_TREE
+ 	      && !VECTOR_INTEGER_TYPE_P (valtype)
+ 	      && !INTEGRAL_TYPE_P (valtype)
+@@ -4458,13 +4466,17 @@ ix86_return_in_memory (const_tree type, const_tree fntype ATTRIBUTE_UNUSED)
+ 	{
+ 	  size = int_size_in_bytes (type);
+
+-	  /* __m128 is returned in xmm0.  */
++	  /* __m128 is returned in xmm0.  256/512-bit vector values are
++	     returned in ymm0/zmm0 when AVX/AVX512 is enabled.  */
+ 	  if ((!type || VECTOR_INTEGER_TYPE_P (type)
+ 	       || INTEGRAL_TYPE_P (type)
+ 	       || VECTOR_FLOAT_TYPE_P (type))
+ 	      && (SCALAR_INT_MODE_P (mode) || VECTOR_MODE_P (mode))
+ 	      && !COMPLEX_MODE_P (mode)
+-	      && (GET_MODE_SIZE (mode) == 16 || size == 16))
++	      && ((GET_MODE_SIZE (mode) == 16 || size == 16)
++		  || (TARGET_AVX && (GET_MODE_SIZE (mode) == 32 || size == 32))
++		  || (TARGET_AVX512F
++		      && (GET_MODE_SIZE (mode) == 64 || size == 64))))
+ 	    return false;
+
+ 	  /* Otherwise, the size must be exactly in [1248]. */
+diff --git a/gcc/testsuite/gcc.target/i386/pr89597-1.c b/gcc/testsuite/gcc.target/i386/pr89597-1.c
+new file mode 100644
+index 000000000000..5dfd9cd86e20
+--- /dev/null
++++ b/gcc/testsuite/gcc.target/i386/pr89597-1.c
+@@ -0,0 +1,12 @@
++/* { dg-do compile { target x86_64-*-mingw* } } */
++/* { dg-options "-O1 -mavx" } */
++
++typedef long long __m256i __attribute__ ((__vector_size__ (32)));
++
++__m256i
++foo (void)
++{
++  return (__m256i) { 1, 2, 3, 4 };
++}
++
++/* { dg-final { scan-assembler "ymm0" } } */
+diff --git a/gcc/testsuite/gcc.target/i386/pr89597-2.c b/gcc/testsuite/gcc.target/i386/pr89597-2.c
+new file mode 100644
+index 000000000000..25e737a9c65c
+--- /dev/null
++++ b/gcc/testsuite/gcc.target/i386/pr89597-2.c
+@@ -0,0 +1,12 @@
++/* { dg-do compile { target x86_64-*-mingw* } } */
++/* { dg-options "-O1 -mavx512f" } */
++
++typedef long long __m512i __attribute__ ((__vector_size__ (64)));
++
++__m512i
++foo (void)
++{
++  return (__m512i) { 1, 2, 3, 4, 5, 6, 7, 8 };
++}
++
++/* { dg-final { scan-assembler "zmm0" } } */
+--
+cgit
