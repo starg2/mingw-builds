@@ -35,7 +35,7 @@
 
 # **************************************************************************
 
-PKG_VERSION=2.3.ga
+PKG_VERSION=2.4.ga
 PKG_NAME=$PKG_ARCHITECTURE-mcfgthread-${PKG_VERSION}
 PKG_DIR_NAME=mcfgthread-${PKG_VERSION}
 PKG_TYPE=git
@@ -48,7 +48,7 @@ PKG_PRIORITY=prereq
 #
 
 PKG_EXECUTE_AFTER_UNCOMPRESS=(
-	"git reset --hard 3662be1e1c0ce6aa5772526f439d786b50e67298" # Reset to this commit hash for reproducible builds
+	"git reset --hard 8bf8eae5d9fdc36c9ea25edf9b0495a77fe96bf6" # Reset to this commit hash for reproducible builds
 )
 
 #
@@ -60,7 +60,7 @@ PKG_PATCHES=()
 ABI_MAJOR=$(echo $PKG_VERSION | cut -d . -f 1)
 
 PKG_EXECUTE_AFTER_CONFIGURE=(
-	"sed 's/@abi_major@/$ABI_MAJOR/g; s/@abi_minor@/$(echo $PKG_VERSION | cut -d . -f 2)/g; s/@abi_string@/\"$PKG_VERSION\"/g' $SRCS_DIR/$PKG_DIR_NAME/mcfgthread/version.h.in > version.h"
+	"sed 's/@abi_major@/$ABI_MAJOR/g; s/@abi_minor@/$(echo $PKG_VERSION | cut -d . -f 2)/g; s/@abi_string@/$PKG_VERSION/g' $SRCS_DIR/$PKG_DIR_NAME/mcfgthread/version.h.in > version.h"
 )
 
 #

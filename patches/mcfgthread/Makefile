@@ -2,6 +2,7 @@
 mcfgthread_cflags = \
 	-D_WIN32_WINNT=0x0601 \
 	-D__USE_MINGW_ANSI_STDIO \
+	-D_CRT_SECURE_NO_WARNINGS \
 	-U_FORTIFY_SOURCE \
 	-fno-stack-protector \
 	-fno-omit-frame-pointer \
@@ -10,6 +11,8 @@ mcfgthread_cflags = \
 	-fstrict-aliasing \
 	-ffast-math \
 	-fdata-sections \
+	-ffunction-sections \
+	-funwind-tables \
 	-Werror=conversion \
 	-Werror=sign-compare \
 	-Werror=sign-conversion \
@@ -28,9 +31,8 @@ mcfgthread_cflags = \
 	-Wunused-const-variable \
 	-masm=intel \
 	-msse2 \
-	-mfpmath=sse \
-	-fno-ident \
-	-funwind-tables
+	-mfpmath=sse+387 \
+	-fno-ident
 
 mcfgthread_ldflags = \
 	-nostdlib \
@@ -45,6 +47,7 @@ mcfgthread_ldflags = \
 mcfgthread_public_headers = \
 	fwd.h \
 	atomic.h \
+	teb.h \
 	clock.h \
 	mutex.h \
 	shared_mutex.h \
@@ -66,7 +69,6 @@ mcfgthread_public_headers = \
 
 mcfgthread_obj_min = \
 	xglobals.o \
-	fwd.o \
 	clock.o \
 	mutex.o \
 	shared_mutex.o \
@@ -78,10 +80,10 @@ mcfgthread_obj_min = \
 	cxa.o \
 	dtor_queue.o \
 	exit.o \
-	tls.o \
-	gthr_aux.o
+	tls.o
 
 mcfgthread_obj_ex = \
+	gthr_aux.o \
 	gthr.o \
 	gthr_libobjc.o \
 	c11.o \
@@ -97,21 +99,21 @@ libmcfgthread.a: $(mcfgthread_obj_min:%=static/%) $(mcfgthread_obj_ex:%=static/%
 libmcfgthread-$(ABI_MAJOR).dll: $(mcfgthread_obj_min:%=shared/%) $(mcfgthread_obj_ex:%=shared/%) libkernel32.a libntdll.a version.o
 	$(CC) -shared $(LDFLAGS) $(mcfgthread_ldflags) -Wl,--out-implib,libmcfgthread.dll.a -o $@ $+
 
-static/%.o: $(SOURCE_DIR)/%.c
+static/%.o: $(SOURCE_DIR)/src/%.c
 	mkdir -p static
-	$(CC) $(CFLAGS) $(mcfgthread_cflags) -ffunction-sections -I. -o $@ -c $<
+	$(CC) $(CFLAGS) $(mcfgthread_cflags) -I. -o $@ -c $<
 
-shared/%.o: $(SOURCE_DIR)/%.c
+shared/%.o: $(SOURCE_DIR)/src/%.c
 	mkdir -p shared
 	$(CC) $(CFLAGS) $(mcfgthread_cflags) -ffreestanding -D__MCF_IN_DLL -I. -o $@ -c $<
 
-version.o: $(SOURCE_DIR)/version.rc $(SOURCE_DIR)/version.manifest
+version.o: $(SOURCE_DIR)/src/version.rc $(SOURCE_DIR)/src/mcfgthread.manifest
 	$(RC) -I. -c65001 -o $@ -i $<
 
-%.i386.def: $(SOURCE_DIR)/%.def.in
+%.i386.def: $(SOURCE_DIR)/src/%.def.in
 	sed -E 's/(@[0-9]+)@/\1/g' $< > $@
 
-%.def: $(SOURCE_DIR)/%.def.in
+%.def: $(SOURCE_DIR)/src/%.def.in
 	sed -E 's/(@[0-9]+)@//g' $< > $@
 
 lib%.a: %$(DEF_SUFFIX).def
