@@ -59,7 +59,7 @@ jobs:
         --fetch-only
 
     - name: Compress sources
-      run: 7z a src.7z src
+      run: 7z a src.7z src "-xr!.git"
       working-directory: c:/buildroot
 
     - name: Upload sources
