@@ -58,12 +58,16 @@ jobs:
         --logviewer-command=cat
         --fetch-only
 
+    - name: Compress sources
+      run: 7z a src.7z src
+      working-directory: c:/buildroot
+
     - name: Upload sources
       uses: actions/upload-artifact@v7
       with:
-        name: src
-        path: c:/buildroot/src/
-        include-hidden-files: true
+        path: c:/buildroot/src.7z
+        compression-level: 0
+        archive: false
 
   build:
     name: ${{ matrix.arch }}-${{ matrix.threads }}-${{ matrix.exceptions }}-${{ matrix.msvcrt }}
@@ -114,15 +118,15 @@ jobs:
           dejagnu
           pkgconf
 
-    - name: Prepare directories
-      shell: msys2 {0}
-      run: mkdir -p /c/buildroot/src
-
     - name: Download sources
       uses: actions/download-artifact@v8
       with:
-        name: src
-        path: c:/buildroot/src/
+        name: src.7z
+        path: c:/buildroot
+
+    - name: Extract sources
+      run: 7z x src.7z
+      working-directory: c:/buildroot
 
     - name: Build
       shell: msys2 {0}
