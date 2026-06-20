@@ -7,9 +7,68 @@ env:
   MINGW_BUILDS_RT_VERSION: "trunk"
 
 jobs:
-  build:
-    name: ${{ matrix.config.name }}
+  download:
     runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - uses: msys2/setup-msys2@v2
+      with:
+        update: true
+        install: >-
+          lndir
+          git
+          subversion
+          tar
+          zip
+          p7zip
+          make
+          patch
+          automake-wrapper
+          autoconf
+          autoconf-archive
+          libtool
+          flex
+          bison
+          gettext
+          gettext-devel
+          wget
+          sshpass
+          texinfo
+          autogen
+          dejagnu
+          pkgconf
+
+    - name: Download sources
+      shell: msys2 {0}
+      run: >-
+        ./build
+        --mode=gcc-$MINGW_BUILDS_GCC_VERSION
+        --buildroot=/c/buildroot
+        --jobs=4
+        --rev=0
+        --with-default-msvcrt=ucrt
+        --rt-version=$MINGW_BUILDS_RT_VERSION
+        --threads=mcf
+        --exceptions=seh
+        --arch=x86_64
+        --bin-compress
+        --enable-languages=c,c++,fortran
+        --enable-tls
+        --logviewer-command=cat
+        --fetch-only
+
+    - name: Upload sources
+      uses: actions/upload-artifact@v7
+      with:
+        name: src
+        path: c:/buildroot/src/
+        include-hidden-files: true
+
+  build:
+    name: ${{ matrix.arch }}-${{ matrix.threads }}-${{ matrix.exceptions }}-${{ matrix.msvcrt }}
+    runs-on: windows-latest
+    needs: download
     strategy:
       fail-fast: false
       matrix:
@@ -55,6 +114,16 @@ jobs:
           dejagnu
           pkgconf
 
+    - name: Prepare directories
+      shell: msys2 {0}
+      run: mkdir -p /c/buildroot/src
+
+    - name: Download sources
+      uses: actions/download-artifact@v8
+      with:
+        name: src
+        path: c:/buildroot/src/
+
     - name: Build
       shell: msys2 {0}
       run: >-
@@ -76,7 +145,7 @@ jobs:
     - name: Upload
       uses: actions/upload-artifact@v7
       with:
-        name: ${{ matrix.arch }}-${{ matrix.threads }}-${{ matrix.exceptions }}-${{ matrix.msvcrt }}
+        name: bin-${{ matrix.arch }}-${{ matrix.threads }}-${{ matrix.exceptions }}-${{ matrix.msvcrt }}
         path: c:/buildroot/archives/
 
   release:
@@ -88,6 +157,7 @@ jobs:
     - name: Download artifact
       uses: actions/download-artifact@v8
       with:
+        pattern: "bin-*"
         path: ./
         merge-multiple: true
 
