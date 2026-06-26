@@ -1003,7 +1003,7 @@ function func_map_gcc_name_to_gcc_version {
 		gcc-11-branch)	echo "11.5.1" ;;
 		gcc-12-branch)	echo "12.5.1" ;;
 		gcc-13-branch)	echo "13.4.1" ;;
-		gcc-14-branch)	echo "14.3.1" ;;
+		gcc-14-branch)	echo "14.4.1" ;;
 		gcc-15-branch)	echo "15.3.1" ;;
 		gcc-16-branch)	echo "16.1.1" ;;
 		gcc-trunk)		echo "17.0.0" ;;
