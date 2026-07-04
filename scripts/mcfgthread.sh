@@ -48,7 +48,7 @@ PKG_PRIORITY=prereq
 #
 
 PKG_EXECUTE_AFTER_UNCOMPRESS=(
-	"git reset --hard 8bf8eae5d9fdc36c9ea25edf9b0495a77fe96bf6" # Reset to this commit hash for reproducible builds
+	"git reset --hard c20ed860f258cb49888b81348f3c8acf11002ab6" # Reset to this commit hash for reproducible builds
 )
 
 #
