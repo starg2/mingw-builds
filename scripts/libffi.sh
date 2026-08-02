@@ -35,11 +35,11 @@
 
 # **************************************************************************
 
-PKG_VERSION=3.6.0
+PKG_VERSION=3.7.1
 PKG_NAME=libffi-${PKG_VERSION}
 PKG_DIR_NAME=libffi-${PKG_VERSION}
 PKG_TYPE=.tar.gz
-PKG_SHA256=31ff1fe32deaebfbb388727f32677bb254bf2a41382c51464c0b1837c9ee9828
+PKG_SHA256=d5e9a6638ddbd2513ddb54518eb67e4bbe6fa707bcc01c10f6212f0a088d819d
 PKG_URLS=(
 	"https://github.com/libffi/libffi/releases/download/v${PKG_VERSION}/libffi-${PKG_VERSION}${PKG_TYPE}|sha256:${PKG_SHA256}"
 )
