@@ -3,7 +3,7 @@ name: x86_64 and i686 release builds
 on: [push, pull_request]
 
 env:
-  MINGW_BUILDS_GCC_VERSION: "16.1.0"
+  MINGW_BUILDS_GCC_VERSION: "16.2.0"
   MINGW_BUILDS_RT_VERSION: "trunk"
 
 jobs:
