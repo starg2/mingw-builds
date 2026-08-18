@@ -83,6 +83,7 @@ PKG_CONFIGURE_FLAGS=(
 	--enable-term-driver
 	--enable-interop
 	--enable-widec
+	--without-progs
 	--without-trace
 	#
 	#CFLAGS="$COMMON_CFLAGS -D__USE_MINGW_ANSI_STDIO=1 -D__USE_MINGW_ACCESS"
