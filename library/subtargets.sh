@@ -160,6 +160,7 @@ function func_get_subtargets {
 		python)
 			local readonly SUBTARGETS=(
 				zlib
+				zstd
 				${PYTHON_SUBTARGETS[@]}
 				3rdparty-post
 				cleanup
