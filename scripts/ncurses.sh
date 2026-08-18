@@ -35,11 +35,11 @@
 
 # **************************************************************************
 
-PKG_VERSION=6.5
+PKG_VERSION=6.6
 PKG_NAME=ncurses-${PKG_VERSION}
 PKG_DIR_NAME=ncurses-${PKG_VERSION}
 PKG_TYPE=.tar.gz
-PKG_SHA256=136D91BC269A9A5785E5F9E980BC76AB57428F604CE3E5A5A90CEBC767971CC6
+PKG_SHA256=355b4cbbed880b0381a04c46617b7656e362585d52e9cf84a67e2009b749ff11
 PKG_URLS=(
 	"https://ftpmirror.gnu.org/gnu/ncurses/ncurses-${PKG_VERSION}${PKG_TYPE}|sha256:${PKG_SHA256}"
 )
