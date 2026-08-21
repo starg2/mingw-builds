@@ -41,7 +41,7 @@ PKG_DIR_NAME=mpc-${PKG_VERSION}
 PKG_TYPE=.tar.gz
 PKG_SHA256=ab642492f5cf882b74aa0cb730cd410a81edcdbec895183ce930e706c1c759b8
 PKG_URLS=(
-	"https://ftpmirror.gnu.org/gnu/mpc/mpc-${PKG_VERSION}${PKG_TYPE}|sha256:${PKG_SHA256}"
+	"${GNU_URL_PREFIX}/mpc/mpc-${PKG_VERSION}${PKG_TYPE}|sha256:${PKG_SHA256}"
 )
 
 PKG_PRIORITY=prereq

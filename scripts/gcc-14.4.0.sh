@@ -41,7 +41,7 @@ PKG_DIR_NAME=gcc-${PKG_VERSION}
 PKG_TYPE=.tar.xz
 PKG_SHA256=752b6f567beac83159c77a7680b1316bdd784738bff9a9d070112c09da90f6d9
 PKG_URLS=(
-	"https://ftpmirror.gnu.org/gnu/gcc/gcc-${PKG_VERSION}/gcc-${PKG_VERSION}${PKG_TYPE}|sha256:${PKG_SHA256}"
+	"${GNU_URL_PREFIX}/gcc/gcc-${PKG_VERSION}/gcc-${PKG_VERSION}${PKG_TYPE}|sha256:${PKG_SHA256}"
 )
 
 PKG_PRIORITY=main

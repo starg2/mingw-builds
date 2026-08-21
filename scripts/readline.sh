@@ -41,7 +41,7 @@ PKG_DIR_NAME=readline-${PKG_VERSION}
 PKG_TYPE=.tar.gz
 PKG_SHA256=3feb7171f16a84ee82ca18a36d7b9be109a52c04f492a053331d7d1095007c35
 PKG_URLS=(
-	"https://ftpmirror.gnu.org/gnu/readline/readline-${PKG_VERSION}${PKG_TYPE}|sha256:${PKG_SHA256}"
+	"${GNU_URL_PREFIX}/readline/readline-${PKG_VERSION}${PKG_TYPE}|sha256:${PKG_SHA256}"
 )
 
 PKG_PRIORITY=extra

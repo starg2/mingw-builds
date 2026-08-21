@@ -41,7 +41,7 @@ PKG_DIR_NAME=termcap-${PKG_VERSION}
 PKG_TYPE=.tar.gz
 PKG_SHA256=91a0e22e5387ca4467b5bcb18edf1c51b930262fd466d5fda396dd9d26719100
 PKG_URLS=(
-	"https://ftpmirror.gnu.org/gnu/termcap/termcap-${PKG_VERSION}${PKG_TYPE}|sha256:${PKG_SHA256}"
+	"${GNU_URL_PREFIX}/termcap/termcap-${PKG_VERSION}${PKG_TYPE}|sha256:${PKG_SHA256}"
 )
 
 PKG_PRIORITY=extra

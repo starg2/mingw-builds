@@ -41,7 +41,7 @@ PKG_DIR_NAME=gdb-${PKG_VERSION}
 PKG_TYPE=.tar.xz
 PKG_SHA256=1c036c0d72e4b3d1fb5c94c88632add6f9d76f4d7c4d2ea793c12a9f19a3228c
 PKG_URLS=(
-	"https://ftpmirror.gnu.org/gnu/gdb/gdb-${PKG_VERSION}${PKG_TYPE}|sha256:${PKG_SHA256}"
+	"${GNU_URL_PREFIX}/gdb/gdb-${PKG_VERSION}${PKG_TYPE}|sha256:${PKG_SHA256}"
 )
 
 PKG_PRIORITY=extra
