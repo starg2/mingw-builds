@@ -53,6 +53,7 @@ PKG_PATCHES=(
 	ncurses/ncurses-6.3-pkgconfig.patch
 	ncurses/ncurses-6.3-cflags-private.patch
 	ncurses/ncurses-bool.patch
+	ncurses/ncurses-6.6-no-wctomb-macros.patch
 )
 
 #

@@ -1,0 +1,20 @@
+--- a/ncurses/curses.priv.h
++++ b/ncurses/curses.priv.h
+@@ -2291,7 +2291,7 @@
+  */
+ #if USE_WIDEC_SUPPORT
+ 
+-#if defined(_NC_WINDOWS_NATIVE) && !defined(_NC_MSC) && !USE_NAMED_PIPES
++#if defined(_NC_WINDOWS_NATIVE) && !defined(_NC_MSC) && !defined(__MINGW64_VERSION_MAJOR) && !USE_NAMED_PIPES
+ /*
+  * MinGW has wide-character functions, but they do not work correctly.
+  */
+@@ -2305,7 +2305,7 @@
+ extern int __MINGW_NOTHROW _nc_mblen(const char *, size_t);
+ #define mblen(s,n) _nc_mblen(s, n)
+ 
+-#endif /* _NC_WINDOWS_NATIVE && !_NC_MSC */
++#endif /* _NC_WINDOWS_NATIVE && !_NC_MSC && !__MINGW64_VERSION_MAJOR && !USE_NAMED_PIPES */
+ 
+ #if HAVE_MBTOWC && HAVE_MBLEN
+ #define reset_mbytes(state) IGNORE_RC(mblen(NULL, (size_t) 0)), IGNORE_RC(mbtowc(NULL, NULL, (size_t) 0))
