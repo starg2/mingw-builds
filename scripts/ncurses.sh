@@ -58,6 +58,8 @@ PKG_PATCHES=(
 
 #
 
+export cf_cv_mbstate_t=yes
+
 PKG_CONFIGURE_FLAGS=(
 	--host=$HOST
 	--build=$BUILD
