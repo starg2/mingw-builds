@@ -48,7 +48,7 @@ PKG_NAME=mingw-w64-${RUNTIME_VERSION}
 		v14.0.0)
 			PKG_SHA256=6eaf921d9eb987d3820b364ea9775bc19b965ec81490b6fdd716526c28e1995c
 		;;
-		:)
+		*)
 			PKG_SHA256=
 		;;
 	esac
