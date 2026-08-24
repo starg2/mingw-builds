@@ -2,11 +2,10 @@ diff --git a/mingw-w64-crt/crt/crtdll.c b/mingw-w64-crt/crt/crtdll.c
 index a605c9532..35392b69c 100644
 --- a/mingw-w64-crt/crt/crtdll.c
 +++ b/mingw-w64-crt/crt/crtdll.c
-@@ -17,6 +17,12 @@
+@@ -17,6 +17,11 @@
  #endif
  #include <sect_attribs.h>
  #include <locale.h>
-+#include <stdio.h>
 +#ifdef __USING_MCFGTHREAD__
 +#include <mcfgthread/cxa.h>
 +#endif
@@ -15,18 +14,6 @@ index a605c9532..35392b69c 100644
  
  #if defined(__x86_64__) && !defined(__SEH__)
  extern int __mingw_init_ehandler (void);
-@@ -83,6 +89,11 @@ WINBOOL WINAPI _CRT_INIT (HANDLE hDllHandle, DWORD dwReason, LPVOID lpreserved)
- 	  if (ret != 0)
- 	    goto i__leave;
- 	  _initterm (__xc_a, __xc_z);
-+#ifdef __USING_MCFGTHREAD__
-+	  /* Register `fflush(NULL)` before user-defined constructors, so
-+	    * it will be executed after all user-defined destructors.  */
-+	  __MCF_cxa_atexit ((__MCF_cxa_dtor_cdecl*)(intptr_t) fflush, NULL, &__dso_handle);
-+#endif
- 	  __main ();
- 
- 	  __native_startup_state = __initialized;
 @@ -173,6 +184,16 @@ DllMainCRTStartup (HANDLE hDllHandle, DWORD dwReason, LPVOID lpreserved)
      {
  	retcode = _CRT_INIT (hDllHandle, dwReason, lpreserved);
@@ -80,18 +67,6 @@ index 037c36caa..d2014ca0b 100644
  
  static int __cdecl check_managed_app (void);
  
-@@ -241,6 +245,11 @@ __tmainCRTStartup (void)
- 	  _amsg_exit (8); /* _RT_SPACEARG */
- 
- 	_initterm (__xc_a, __xc_z);
-+#ifdef __USING_MCFGTHREAD__
-+	/* Register `fflush(NULL)` before user-defined constructors, so
-+	 * it will be executed after all user-defined destructors.  */
-+	__MCF_cxa_atexit ((__MCF_cxa_dtor_cdecl*)(intptr_t) fflush, NULL, &__dso_handle);
-+#endif
- 	__main (); /* C++ initialization. */
- 
- 	__native_startup_state = __initialized;
 @@ -331,12 +340,16 @@ static int duplicate_ppstrings (int ac, _TCHAR ***av)
  
  int __cdecl atexit (_PVFV func)
