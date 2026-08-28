@@ -53,7 +53,9 @@ PKG_EXECUTE_AFTER_UNCOMPRESS=(
 
 #
 
-PKG_PATCHES=()
+PKG_PATCHES=(
+	mcfgthread/_tls_used.patch
+)
 
 #
 

@@ -1,0 +1,16 @@
+diff --git a/mcfgthread/src/xglobals.c b/mcfgthread/src/xglobals.c
+index eac289d6..1597db8f 100644
+--- a/mcfgthread/src/xglobals.c
++++ b/mcfgthread/src/xglobals.c
+@@ -914,6 +914,11 @@ do_tls_callback(PVOID module, ULONG reason, PVOID reserved)
+       }
+   }
+ 
++#if defined __GNUC__
++extern const IMAGE_TLS_DIRECTORY _tls_used;
++static __attribute__((destructor)) void _include_tls_used(void) { asm volatile ("" :: "r" (&_tls_used)); }
++#endif
++
+ /* This requires the main executable be linked with 'tlssup.o'. Such
+  * initialization shall happen as early as possible.  */
+ #if defined _MSC_VER
