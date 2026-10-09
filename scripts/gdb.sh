@@ -35,11 +35,11 @@
 
 # **************************************************************************
 
-PKG_VERSION=17.2
+PKG_VERSION=18.1
 PKG_NAME=gdb-${PKG_VERSION}
 PKG_DIR_NAME=gdb-${PKG_VERSION}
 PKG_TYPE=.tar.xz
-PKG_SHA256=1c036c0d72e4b3d1fb5c94c88632add6f9d76f4d7c4d2ea793c12a9f19a3228c
+PKG_SHA256=cd9fc3fe2b47743840e42c1592d3d87f8302eb18639c0b8b4ba0898002e2348f
 PKG_URLS=(
 	"${GNU_URL_PREFIX}/gdb/gdb-${PKG_VERSION}${PKG_TYPE}|sha256:${PKG_SHA256}"
 )
