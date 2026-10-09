@@ -35,11 +35,11 @@
 
 # **************************************************************************
 
-PKG_VERSION=3.6.4
+PKG_VERSION=3.6.5
 PKG_NAME=openssl-${PKG_VERSION}
 PKG_DIR_NAME=openssl-${PKG_VERSION}
 PKG_TYPE=.tar.gz
-PKG_SHA256=9bffaa1ad1e07b354c21bd3324ec02fa15579f45a7d0494b3e74bc449b7333ef
+PKG_SHA256=a2157c2830efdec3788939b00c9b0638306d3f0bbb76dc4832ee503bb397df98
 PKG_URLS=(
 	"https://github.com/openssl/openssl/releases/download/openssl-${PKG_VERSION}/openssl-${PKG_VERSION}${PKG_TYPE}|sha256:${PKG_SHA256}"
 )
