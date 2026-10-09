@@ -35,7 +35,7 @@
 
 # **************************************************************************
 
-PKG_VERSION=2.4.ga
+PKG_VERSION=2.5.ga
 PKG_NAME=$PKG_ARCHITECTURE-mcfgthread-${PKG_VERSION}
 PKG_DIR_NAME=mcfgthread-${PKG_VERSION}
 PKG_TYPE=git
@@ -48,14 +48,12 @@ PKG_PRIORITY=prereq
 #
 
 PKG_EXECUTE_AFTER_UNCOMPRESS=(
-	"git reset --hard c20ed860f258cb49888b81348f3c8acf11002ab6" # Reset to this commit hash for reproducible builds
+	"git reset --hard 061b185964d85198f577ba6d279d0cbd7f010d8a" # Reset to this commit hash for reproducible builds
 )
 
 #
 
-PKG_PATCHES=(
-	mcfgthread/_tls_used.patch
-)
+PKG_PATCHES=()
 
 #
 
