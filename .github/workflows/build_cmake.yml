@@ -14,6 +14,7 @@ jobs:
 
     - uses: msys2/setup-msys2@v2
       with:
+        msystem: MSYS
         update: true
 
     - name: Randomly select a GNU mirror server
@@ -78,6 +79,7 @@ jobs:
 
     - uses: msys2/setup-msys2@v2
       with:
+        msystem: MSYS
         update: true
 
     - name: Download sources
