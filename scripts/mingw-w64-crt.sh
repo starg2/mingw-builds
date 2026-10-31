@@ -59,9 +59,7 @@ PKG_PATCHES=(
 		[[ $RUNTIME_MAJOR_VERSION -le 12 ]] && {
 			echo "mingw-w64/9001-v11-crt-Mark-atexit-as-DATA-because-it-s-always-overridd.patch"
 		}
-		[[ $RUNTIME_MAJOR_VERSION -ge 14 ]] && {
-			echo "mingw-w64/9002-v14-crt-Provide-wrappers-for-exit-in-libmingwex.patch"
-		} || {
+		[[ $RUNTIME_MAJOR_VERSION -le 14 ]] && {
 			echo "mingw-w64/9002-v$RUNTIME_MAJOR_VERSION-crt-Provide-wrappers-for-exit-in-libmingwex.patch"
 		}
 		[[ $RUNTIME_MAJOR_VERSION -ge 15 ]] && {
