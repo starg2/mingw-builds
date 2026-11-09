@@ -444,7 +444,7 @@ function func_download {
 					$_url -O $_lib_name > $_log_name 2>&1
 				_result=$?
 				[[ $_result == 0 && -n $_sha256 ]] && {
-					echo "$_sha256 $_lib_name" | sha256sum --check >> $_log_name 2>&1
+					echo "$_sha256 *$_lib_name" | sha256sum --check >> $_log_name 2>&1
 					_result=$?
 				}
 			}
